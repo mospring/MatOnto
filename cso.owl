@@ -4,69 +4,361 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.stream-ontology.com/crytalstructure> .
+@base <http://www.stream-ontology.com/crystalstructure> .
 
-<http://www.stream-ontology.com/crytalstructure> rdf:type owl:Ontology ;
-                                                  owl:imports <http://emmo.info/emmo/1.0.0-alpha> ;
-                                                  rdfs:label "Crystal Structure Ontology" .
+<http://www.stream-ontology.com/crystalstructure> rdf:type owl:Ontology ;
+                                                   owl:imports <http://emmo.info/emmo/1.0.0-alpha> ;
+                                                   rdfs:label "Crystal Structure Ontology" .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#block
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#block> rdf:type owl:ObjectProperty .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#classification
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#classification> rdf:type owl:ObjectProperty .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#element
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#element> rdf:type owl:ObjectProperty .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#group
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#group> rdf:type owl:ObjectProperty .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#period
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#period> rdf:type owl:ObjectProperty .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#standardState
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#standardState> rdf:type owl:ObjectProperty .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasInput
+:hasInput rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf <http://emmo.info/emmo/middle/holistic#EMMO_ae2d1a96_bfa1_409a_a7d2_03d69e8a125a> .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasOutput
+:hasOutput rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf <http://emmo.info/emmo/middle/holistic#EMMO_ae2d1a96_bfa1_409a_a7d2_03d69e8a125a> ;
+           rdfs:domain :Operation .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasRepresentation
+:hasRepresentation rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf <http://emmo.info/emmo/top/semiotics#EMMO_eb3518bf_f799_4f9e_8c3e_ce59af11453b> .
+
 
 #################################################################
 #    Data properties
 #################################################################
 
-###  http://www.stream-ontology.com/crytalstructure#hasSpaceGroupNumber
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#atomicNumber
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#atomicNumber> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#atomicWeight
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#atomicWeight> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#color
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#color> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#name
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#name> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#symbol
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#symbol> rdf:type owl:DatatypeProperty .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasNumberOfAtomSpecies
+:hasNumberOfAtomSpecies rdf:type owl:DatatypeProperty ,
+                                 owl:FunctionalProperty ;
+                        rdfs:domain [ rdf:type owl:Class ;
+                                      owl:unionOf ( <http://emmo.info/emmo/middle/materials#EMMO_3397f270_dfc1_4500_8f6f_4d0d85ac5f71>
+                                                    :CrystalUnitCell
+                                                  )
+                                    ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasNumberOfAtoms
+:hasNumberOfAtoms rdf:type owl:DatatypeProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain [ rdf:type owl:Class ;
+                                owl:unionOf ( <http://emmo.info/emmo/middle/materials#EMMO_3397f270_dfc1_4500_8f6f_4d0d85ac5f71>
+                                              :CrystalUnitCell
+                                            )
+                              ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasPointGroupShortSymbol
+:hasPointGroupShortSymbol rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf owl:topDataProperty ;
+                          rdf:type owl:FunctionalProperty ;
+                          rdfs:domain :CrystalPointGroup ;
+                          rdfs:range xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasSchoenflies
+:hasSchoenflies rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdf:type owl:FunctionalProperty ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( :CrystalPointGroup
+                                            :SpaceGroup
+                                          )
+                            ] ;
+                rdfs:range xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasSpaceGroupNumber
 :hasSpaceGroupNumber rdf:type owl:DatatypeProperty ;
-                     rdfs:subPropertyOf <http://emmo.info/emmo/middle/math#EMMO_faf79f53_749d_40b2_807c_d34244c192f4> ;
+                     rdfs:subPropertyOf owl:topDataProperty ;
+                     rdf:type owl:FunctionalProperty ;
                      rdfs:domain :SpaceGroup ;
                      rdfs:range xsd:integer .
 
 
-###  http://www.stream-ontology.com/crytalstructure#hasSpaceGroupShortSymbol
+###  http://www.stream-ontology.com/crystalstructure#hasSpaceGroupShortSymbol
 :hasSpaceGroupShortSymbol rdf:type owl:DatatypeProperty ;
-                          rdfs:subPropertyOf <http://emmo.info/emmo/middle/perceptual#EMMO_23b579e1_8088_45b5_9975_064014026c42> ;
+                          rdfs:subPropertyOf owl:topDataProperty ;
+                          rdf:type owl:FunctionalProperty ;
                           rdfs:domain :SpaceGroup ;
                           rdfs:range xsd:string .
 
-###  http://www.stream-ontology.com/crytalstructure#hasPointGroupShortSymbol
-:hasPointGroupShortSymbol rdf:type owl:DatatypeProperty ;
-                          rdfs:subPropertyOf <http://emmo.info/emmo/middle/perceptual#EMMO_23b579e1_8088_45b5_9975_064014026c42> ;
-                          rdfs:domain :CrystalPointGroup ;
-                          rdfs:range xsd:string .
 
-###  http://www.stream-ontology.com/crytalstructure#hasSchoenflies
-:hasSchoenflies rdf:type owl:DatatypeProperty ;
-                          rdfs:subPropertyOf <http://emmo.info/emmo/middle/perceptual#EMMO_23b579e1_8088_45b5_9975_064014026c42> ;
-                          rdfs:domain :CrystalPointGroup ;
-                          rdfs:range xsd:string .
+###  http://www.stream-ontology.com/crystalstructure#hasWyckoffLetter
+:hasWyckoffLetter rdf:type owl:DatatypeProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain :WyckoffPosition ;
+                  rdfs:range xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasWyckoffMultiplicity
+:hasWyckoffMultiplicity rdf:type owl:DatatypeProperty ,
+                                 owl:FunctionalProperty ;
+                        rdfs:domain :WyckoffPosition ;
+                        rdfs:range xsd:integer .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasWyckoffSiteSymmetry
+:hasWyckoffSiteSymmetry rdf:type owl:DatatypeProperty ,
+                                 owl:FunctionalProperty ;
+                        rdfs:domain :WyckoffPosition ;
+                        rdfs:range xsd:string .
+
 
 #################################################################
 #    Classes
 #################################################################
 
-###  http://www.stream-ontology.com/crytalstructure#AtomInSolid
+###  http://emmo.info/emmo/middle/materials#EMMO_eb77076b_a104_42ac_a065_798b2d2809ad
+<http://emmo.info/emmo/middle/materials#EMMO_eb77076b_a104_42ac_a065_798b2d2809ad> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                                                                                     owl:someValuesFrom :ChemicalElement
+                                                                                                   ] .
+
+
+###  http://emmo.info/emmo/middle/perceptual#EMMO_39362460_2a97_4367_8f93_0418c2ac9a08
+<http://emmo.info/emmo/middle/perceptual#EMMO_39362460_2a97_4367_8f93_0418c2ac9a08> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                                                      owl:onProperty :hasRepresentation ;
+                                                                                                      owl:someValuesFrom <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec>
+                                                                                                    ] .
+
+
+###  http://emmo.info/emmo/top/math#EMMO_28fbea28_2204_4613_87ff_6d877b855fcd
+<http://emmo.info/emmo/top/math#EMMO_28fbea28_2204_4613_87ff_6d877b855fcd> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                                             owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                                                             owl:someValuesFrom :ArrayComponent
+                                                                                           ] .
+
+
+###  http://emmo.info/emmo/top/semiotics#EMMO_0cd58641_824c_4851_907f_f4c3be76630c
+<http://emmo.info/emmo/top/semiotics#EMMO_0cd58641_824c_4851_907f_f4c3be76630c> rdfs:subClassOf [ rdf:type owl:Class ;
+                                                                                                  owl:unionOf ( <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec>
+                                                                                                                <http://emmo.info/emmo/middle/math#EMMO_f8bd64d5_5d3e_4ad4_a46e_c30714fecb7f>
+                                                                                                              )
+                                                                                                ] .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Block
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Block> rdf:type owl:Class .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Classification
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Classification> rdf:type owl:Class .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Element
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> rdf:type owl:Class ;
+                                                                  owl:equivalentClass :ChemicalElement ;
+                                                                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#block> ;
+                                                                                    owl:allValuesFrom <http://www.daml.org/2003/01/periodictable/PeriodicTable#Block>
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#classification> ;
+                                                                                    owl:allValuesFrom <http://www.daml.org/2003/01/periodictable/PeriodicTable#Classification>
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#group> ;
+                                                                                    owl:allValuesFrom <http://www.daml.org/2003/01/periodictable/PeriodicTable#Group>
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#period> ;
+                                                                                    owl:allValuesFrom <http://www.daml.org/2003/01/periodictable/PeriodicTable#Period>
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#standardState> ;
+                                                                                    owl:allValuesFrom <http://www.daml.org/2003/01/periodictable/PeriodicTable#StandardState>
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#block> ;
+                                                                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#group> ;
+                                                                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#period> ;
+                                                                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#atomicNumber> ;
+                                                                                    owl:allValuesFrom xsd:integer
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#atomicWeight> ;
+                                                                                    owl:allValuesFrom xsd:float
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#color> ;
+                                                                                    owl:allValuesFrom xsd:string
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#name> ;
+                                                                                    owl:allValuesFrom xsd:string
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#symbol> ;
+                                                                                    owl:allValuesFrom xsd:string
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#atomicNumber> ;
+                                                                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#atomicWeight> ;
+                                                                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#name> ;
+                                                                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                                  ] ,
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#symbol> ;
+                                                                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                                  ] .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Group
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Group> rdf:type owl:Class ;
+                                                                rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#element> ;
+                                                                                  owl:allValuesFrom <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element>
+                                                                                ] .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Period
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Period> rdf:type owl:Class ;
+                                                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                                   owl:onProperty <http://www.daml.org/2003/01/periodictable/PeriodicTable#element> ;
+                                                                                   owl:allValuesFrom <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element>
+                                                                                 ] .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#StandardState
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#StandardState> rdf:type owl:Class .
+
+
+###  http://www.stream-ontology.com/crystalstructure#ArrayComponent
+:ArrayComponent rdf:type owl:Class ;
+                rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_54ee6b5e_5261_44a8_86eb_5717e7fdb9d0> ,
+                                [ rdf:type owl:Class ;
+                                  owl:unionOf ( <http://emmo.info/emmo/middle/math#EMMO_4ce76d7f_03f8_45b6_9003_90052a79bfaa>
+                                                <http://emmo.info/emmo/middle/perceptual#EMMO_a1083d0a_c1fb_471f_8e20_a98f881ad527>
+                                              )
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_297999d6_c9e4_4262_9536_bd524d1c6e21> ;
+                                  owl:someValuesFrom <http://emmo.info/emmo/top/semiotics#EMMO_0cd58641_824c_4851_907f_f4c3be76630c>
+                                ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#AtomInSolid
 :AtomInSolid rdf:type owl:Class ;
              rdfs:subClassOf <http://emmo.info/emmo/middle/materials#EMMO_8303a247_f9d9_4616_bdcd_f5cbd7b298e3> ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                               owl:someValuesFrom :Position
+                             ] ,
                              [ rdf:type owl:Restriction ;
                                owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
                                owl:someValuesFrom :ElectronInSolid
                              ] .
 
 
-###  http://www.stream-ontology.com/crytalstructure#Crystal
+###  http://www.stream-ontology.com/crystalstructure#BravaisLattice
+:BravaisLattice rdf:type owl:Class ;
+                rdfs:subClassOf :RealSpaceLattice ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c>
+                                                 ] ;
+                                  owl:someValuesFrom :RealSpace
+                                ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BrillouinZone
+:BrillouinZone rdf:type owl:Class ;
+               rdfs:subClassOf :ReciprocalUnitCell ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c> ;
+                                 owl:someValuesFrom :ReciprocalLattice
+                               ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#ChemicalElement
+:ChemicalElement rdf:type owl:Class ;
+                 rdfs:subClassOf <http://emmo.info/emmo/middle/properties#EMMO_909415d1_7c43_4d5e_bbeb_7e1910159f66> .
+
+
+###  http://www.stream-ontology.com/crystalstructure#Crystal
 :Crystal rdf:type owl:Class ;
          rdfs:subClassOf <http://emmo.info/emmo/middle/materials#EMMO_a2b006f2_bbfd_4dba_bcaa_3fca20cd6be1> ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c> ;
+                           owl:someValuesFrom :CrystalUnitCell
+                         ] ,
                          [ rdf:type owl:Restriction ;
                            owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
                            owl:someValuesFrom :AtomInSolid
                          ] .
 
 
-###  http://www.stream-ontology.com/crytalstructure#CrystalPointGroup
+###  http://www.stream-ontology.com/crystalstructure#CrystalPointGroup
 :CrystalPointGroup rdf:type owl:Class ;
                    rdfs:subClassOf :PointGroup .
 
 
-###  http://www.stream-ontology.com/crytalstructure#CrystalStructure
+###  http://www.stream-ontology.com/crystalstructure#CrystalStructure
 :CrystalStructure rdf:type owl:Class ;
                   rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_84cadc45_6758_46f2_ba2a_5ead65c70213> ,
                                   [ rdf:type owl:Restriction ;
@@ -75,309 +367,2630 @@
                                   ] .
 
 
-###  http://www.stream-ontology.com/crytalstructure#CrystalSymmetry
+###  http://www.stream-ontology.com/crystalstructure#CrystalSymmetry
 :CrystalSymmetry rdf:type owl:Class ;
-                 rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_84cadc45_6758_46f2_ba2a_5ead65c70213> .
+                 rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_84cadc45_6758_46f2_ba2a_5ead65c70213> ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c> ;
+                                   owl:someValuesFrom :CrystalPointGroup
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c> ;
+                                   owl:someValuesFrom :SpaceGroup
+                                 ] .
 
 
-###  http://www.stream-ontology.com/crytalstructure#ElectronInSolid
+###  http://www.stream-ontology.com/crystalstructure#CrystalUnitCell
+:CrystalUnitCell rdf:type owl:Class ;
+                 rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_53935db0_af45_4426_b9e9_244a0d77db00> ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c> ;
+                                   owl:someValuesFrom :BravaisLattice
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                   owl:someValuesFrom :AtomInSolid
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                   owl:someValuesFrom :LatticeVector
+                                 ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#ElectronInSolid
 :ElectronInSolid rdf:type owl:Class ;
                  rdfs:subClassOf <http://emmo.info/emmo/middle/physicalistic#EMMO_8043d3c6_a4c1_4089_ba34_9744e28e5b3d> .
 
 
-###  http://www.stream-ontology.com/crytalstructure#PointGroup
+###  http://www.stream-ontology.com/crystalstructure#FourierTransform
+:FourierTransform rdf:type owl:Class ;
+                  rdfs:subClassOf :Operation .
+
+
+###  http://www.stream-ontology.com/crystalstructure#GeneralWyckoffPosition
+:GeneralWyckoffPosition rdf:type owl:Class ;
+                        rdfs:subClassOf :WyckoffPosition .
+
+
+###  http://www.stream-ontology.com/crystalstructure#HighSymmetryPoint
+:HighSymmetryPoint rdf:type owl:Class ;
+                   rdfs:subClassOf :kPoint .
+
+
+###  http://www.stream-ontology.com/crystalstructure#Lattice
+:Lattice rdf:type owl:Class ;
+         rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_f7ed665b_c2e1_42bc_889b_6b42ed3a36f0> ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                           owl:someValuesFrom <http://emmo.info/emmo/middle/perceptual#EMMO_39362460_2a97_4367_8f93_0418c2ac9a08>
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c>
+                                          ] ;
+                           owl:someValuesFrom <http://emmo.info/emmo/middle/perceptual#EMMO_5f278af9_8593_4e27_a717_ccc9e07a0ddf>
+                         ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LatticeVector
+:LatticeVector rdf:type owl:Class ;
+               rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec> .
+
+
+###  http://www.stream-ontology.com/crystalstructure#Operation
+:Operation rdf:type owl:Class ;
+           rdfs:subClassOf <http://emmo.info/emmo/middle/holistic#EMMO_43e9a05d_98af_41b4_92f6_00f79a09bfce> ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :hasInput ;
+                             owl:someValuesFrom <http://emmo.info/emmo/middle/holistic#EMMO_49804605_c0fe_4538_abda_f70ba1dc8a5d>
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :hasOutput ;
+                             owl:someValuesFrom <http://emmo.info/emmo/middle/holistic#EMMO_49804605_c0fe_4538_abda_f70ba1dc8a5d>
+                           ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#PointGroup
 :PointGroup rdf:type owl:Class ;
             rdfs:subClassOf :Symmetry .
 
 
-###  http://www.stream-ontology.com/crytalstructure#SpaceGroup
+###  http://www.stream-ontology.com/crystalstructure#Position
+:Position rdf:type owl:Class ;
+          rdfs:subClassOf <http://emmo.info/emmo/middle/perceptual#EMMO_39362460_2a97_4367_8f93_0418c2ac9a08> ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                           ] ;
+                            owl:someValuesFrom :RealSpace
+                          ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#PrimitiveUnitCell
+:PrimitiveUnitCell rdf:type owl:Class .
+
+
+###  http://www.stream-ontology.com/crystalstructure#RealSpace
+:RealSpace rdf:type owl:Class ;
+           rdfs:subClassOf <http://emmo.info/emmo/middle/perceptual#EMMO_5f278af9_8593_4e27_a717_ccc9e07a0ddf> .
+
+
+###  http://www.stream-ontology.com/crystalstructure#RealSpaceLattice
+:RealSpaceLattice rdf:type owl:Class ;
+                  rdfs:subClassOf :Lattice .
+
+
+###  http://www.stream-ontology.com/crystalstructure#ReciprocalLattice
+:ReciprocalLattice rdf:type owl:Class ;
+                   rdfs:subClassOf :Lattice ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                     owl:someValuesFrom :kPoint
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c>
+                                                    ] ;
+                                     owl:someValuesFrom :ReciprocalSpace
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty [ owl:inverseOf :hasOutput
+                                                    ] ;
+                                     owl:someValuesFrom [ owl:intersectionOf ( :FourierTransform
+                                                                               [ rdf:type owl:Restriction ;
+                                                                                 owl:onProperty :hasInput ;
+                                                                                 owl:someValuesFrom :RealSpaceLattice
+                                                                               ]
+                                                                             ) ;
+                                                          rdf:type owl:Class
+                                                        ]
+                                   ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#ReciprocalSpace
+:ReciprocalSpace rdf:type owl:Class ;
+                 rdfs:subClassOf <http://emmo.info/emmo/middle/perceptual#EMMO_5f278af9_8593_4e27_a717_ccc9e07a0ddf> .
+
+
+###  http://www.stream-ontology.com/crystalstructure#ReciprocalUnitCell
+:ReciprocalUnitCell rdf:type owl:Class ;
+                    rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_53935db0_af45_4426_b9e9_244a0d77db00> .
+
+
+###  http://www.stream-ontology.com/crystalstructure#SpaceGroup
 :SpaceGroup rdf:type owl:Class ;
-            rdfs:subClassOf :Symmetry .
+            rdfs:subClassOf :Symmetry ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://emmo.info/emmo/top/mereotopology#EMMO_17e27c22_37e1_468c_9dd7_95e137f73e7f> ;
+                              owl:someValuesFrom :WyckoffPosition
+                            ] .
 
 
-###  http://www.stream-ontology.com/crytalstructure#StructurePrototype
+###  http://www.stream-ontology.com/crystalstructure#SpecialWyckoffPosition
+:SpecialWyckoffPosition rdf:type owl:Class ;
+                        rdfs:subClassOf :WyckoffPosition .
+
+
+###  http://www.stream-ontology.com/crystalstructure#StructurePrototype
 :StructurePrototype rdf:type owl:Class ;
                     rdfs:subClassOf :CrystalStructure .
 
 
-###  http://www.stream-ontology.com/crytalstructure#Symmetry
+###  http://www.stream-ontology.com/crystalstructure#Symmetry
 :Symmetry rdf:type owl:Class ;
           rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_f7ed665b_c2e1_42bc_889b_6b42ed3a36f0> .
+
+
+###  http://www.stream-ontology.com/crystalstructure#WyckoffPosition
+:WyckoffPosition rdf:type owl:Class ;
+                 rdfs:subClassOf :Position ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasWyckoffLetter ;
+                                   owl:someValuesFrom xsd:string
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasWyckoffMultiplicity ;
+                                   owl:someValuesFrom xsd:integer
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasWyckoffSiteSymmetry ;
+                                   owl:someValuesFrom xsd:string
+                                 ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#kPoint
+:kPoint rdf:type owl:Class ;
+        rdfs:subClassOf <http://emmo.info/emmo/middle/perceptual#EMMO_39362460_2a97_4367_8f93_0418c2ac9a08> ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                         ] ;
+                          owl:someValuesFrom :ReciprocalSpace
+                        ] .
 
 
 #################################################################
 #    Individuals
 #################################################################
 
-###  http://www.stream-ontology.com/crytalstructure#spacegroup1
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ac
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ac> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ag
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ag> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Al
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Al> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Am
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Am> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ar
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ar> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#As
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#As> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#At
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#At> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Au
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Au> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#B
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#B> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ba
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ba> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Be
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Be> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Bh
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Bh> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Bi
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Bi> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Bk
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Bk> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Br
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Br> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#C
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#C> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ca
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ca> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Cd
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Cd> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ce
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ce> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Cf
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Cf> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Cl
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Cl> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Cm
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Cm> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Co
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Co> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Cr
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Cr> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Cs
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Cs> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Cu
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Cu> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Db
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Db> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Dy
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Dy> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Er
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Er> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Es
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Es> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Eu
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Eu> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#F
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#F> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Fe
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Fe> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Fm
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Fm> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Fr
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Fr> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ga
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ga> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Gd
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Gd> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ge
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ge> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#H
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#H> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#He
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#He> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Hf
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Hf> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Hg
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Hg> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ho
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ho> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Hs
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Hs> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#I
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#I> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#In
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#In> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ir
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ir> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#K
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#K> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Kr
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Kr> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#La
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#La> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Li
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Li> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Lr
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Lr> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Lu
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Lu> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Md
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Md> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Mg
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Mg> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Mn
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Mn> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Mo
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Mo> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Mt
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Mt> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#N
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#N> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Na
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Na> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Nb
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Nb> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Nd
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Nd> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ne
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ne> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ni
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ni> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#No
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#No> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Np
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Np> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#O
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#O> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Os
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Os> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#P
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#P> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Pa
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Pa> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Pb
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Pb> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Pd
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Pd> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Pm
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Pm> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Po
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Po> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Pr
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Pr> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Pt
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Pt> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Pu
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Pu> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ra
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ra> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Rb
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Rb> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Re
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Re> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Rf
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Rf> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Rh
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Rh> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Rn
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Rn> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ru
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ru> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#S
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#S> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Sb
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Sb> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Sc
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Sc> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Se
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Se> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Sg
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Sg> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Si
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Si> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Sm
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Sm> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Sn
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Sn> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Sr
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Sr> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ta
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ta> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Tb
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Tb> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Tc
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Tc> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Te
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Te> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Th
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Th> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Ti
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Ti> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Tl
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Tl> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Tm
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Tm> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#U
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#U> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Uub
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Uub> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Uuh
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Uuh> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Uun
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Uun> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Uuo
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Uuo> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Uup
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Uup> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Uuq
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Uuq> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Uus
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Uus> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Uut
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Uut> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Uuu
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Uuu> rdf:type owl:NamedIndividual ,
+                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#V
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#V> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#W
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#W> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Xe
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Xe> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Y
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Y> rdf:type owl:NamedIndividual ,
+                                                                     <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Yb
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Yb> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Zn
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Zn> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.daml.org/2003/01/periodictable/PeriodicTable#Zr
+<http://www.daml.org/2003/01/periodictable/PeriodicTable#Zr> rdf:type owl:NamedIndividual ,
+                                                                      <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC1
+:crystalpointgroupC1 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "1"^^xsd:string ;
+                     :hasSchoenflies "C1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC2
+:crystalpointgroupC2 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "2"^^xsd:string ;
+                     :hasSchoenflies "C2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC2h
+:crystalpointgroupC2h rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "2/m"^^xsd:string ;
+                      :hasSchoenflies "C2h"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC2v
+:crystalpointgroupC2v rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "mm2"^^xsd:string ;
+                      :hasSchoenflies "C2v"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC3
+:crystalpointgroupC3 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "3"^^xsd:string ;
+                     :hasSchoenflies "C3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC3h
+:crystalpointgroupC3h rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "-6"^^xsd:string ;
+                      :hasSchoenflies "C3h"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC3i
+:crystalpointgroupC3i rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "-3"^^xsd:string ;
+                      :hasSchoenflies "C3i"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC3v
+:crystalpointgroupC3v rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "3m"^^xsd:string ;
+                      :hasSchoenflies "C3v"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC4
+:crystalpointgroupC4 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "4"^^xsd:string ;
+                     :hasSchoenflies "C4"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC4h
+:crystalpointgroupC4h rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "4/m"^^xsd:string ;
+                      :hasSchoenflies "C4h"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC4v
+:crystalpointgroupC4v rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "4mm"^^xsd:string ;
+                      :hasSchoenflies "C4v"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC6
+:crystalpointgroupC6 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "6"^^xsd:string ;
+                     :hasSchoenflies "C6"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC6h
+:crystalpointgroupC6h rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "6/m"^^xsd:string ;
+                      :hasSchoenflies "C6h"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC6v
+:crystalpointgroupC6v rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "6mm"^^xsd:string ;
+                      :hasSchoenflies "C6v"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupCi
+:crystalpointgroupCi rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "-1"^^xsd:string ;
+                     :hasSchoenflies "Ci"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupCs
+:crystalpointgroupCs rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "m"^^xsd:string ;
+                     :hasSchoenflies "Cs"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD2
+:crystalpointgroupD2 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "222"^^xsd:string ;
+                     :hasSchoenflies "D2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD2d
+:crystalpointgroupD2d rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "-42m"^^xsd:string ;
+                      :hasSchoenflies "D2d"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD2h
+:crystalpointgroupD2h rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "mmm"^^xsd:string ;
+                      :hasSchoenflies "D2h"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD3
+:crystalpointgroupD3 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "32"^^xsd:string ;
+                     :hasSchoenflies "D3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD3d
+:crystalpointgroupD3d rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "-3m"^^xsd:string ;
+                      :hasSchoenflies "D3d"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD3h
+:crystalpointgroupD3h rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "62m"^^xsd:string ;
+                      :hasSchoenflies "D3h"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD4
+:crystalpointgroupD4 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "422"^^xsd:string ;
+                     :hasSchoenflies "D4"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD4h
+:crystalpointgroupD4h rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "4/mmm"^^xsd:string ;
+                      :hasSchoenflies "D4h"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD6
+:crystalpointgroupD6 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "622"^^xsd:string ;
+                     :hasSchoenflies "D6"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD6h
+:crystalpointgroupD6h rdf:type owl:NamedIndividual ,
+                               :CrystalPointGroup ;
+                      :hasPointGroupShortSymbol "6/mmm"^^xsd:string ;
+                      :hasSchoenflies "D6h"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupO
+:crystalpointgroupO rdf:type owl:NamedIndividual ,
+                             :CrystalPointGroup ;
+                    :hasPointGroupShortSymbol "432"^^xsd:string ;
+                    :hasSchoenflies "O"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupOh
+:crystalpointgroupOh rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "m-3m"^^xsd:string ;
+                     :hasSchoenflies "Oh"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupS4
+:crystalpointgroupS4 rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "-4"^^xsd:string ;
+                     :hasSchoenflies "S4"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupT
+:crystalpointgroupT rdf:type owl:NamedIndividual ,
+                             :CrystalPointGroup ;
+                    :hasPointGroupShortSymbol "23"^^xsd:string ;
+                    :hasSchoenflies "T"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupTd
+:crystalpointgroupTd rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "-43m"^^xsd:string ;
+                     :hasSchoenflies "Td"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupTh
+:crystalpointgroupTh rdf:type owl:NamedIndividual ,
+                              :CrystalPointGroup ;
+                     :hasPointGroupShortSymbol "m-3"^^xsd:string ;
+                     :hasSchoenflies "Th"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup1
 :spacegroup1 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
              :hasSpaceGroupNumber 1 ;
              :hasSpaceGroupShortSymbol "P1"^^xsd:string .
 
-:spacegroup2 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 2 ; :hasSpaceGroupShortSymbol "P-1"^^xsd:string .
-:spacegroup3 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 3 ; :hasSpaceGroupShortSymbol "P2"^^xsd:string .
-:spacegroup4 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 4 ; :hasSpaceGroupShortSymbol "P2_1"^^xsd:string .
-:spacegroup5 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 5 ; :hasSpaceGroupShortSymbol "C2"^^xsd:string .
-:spacegroup6 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 6 ; :hasSpaceGroupShortSymbol "Pm"^^xsd:string .
-:spacegroup7 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 7 ; :hasSpaceGroupShortSymbol "Pc"^^xsd:string .
-:spacegroup8 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 8 ; :hasSpaceGroupShortSymbol "Cm"^^xsd:string .
-:spacegroup9 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 9 ; :hasSpaceGroupShortSymbol "Cc"^^xsd:string .
-:spacegroup10 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 10 ; :hasSpaceGroupShortSymbol "P2/m"^^xsd:string .
-:spacegroup11 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 11 ; :hasSpaceGroupShortSymbol "P2_1/m"^^xsd:string .
-:spacegroup12 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 12 ; :hasSpaceGroupShortSymbol "C2/m"^^xsd:string .
-:spacegroup13 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 13 ; :hasSpaceGroupShortSymbol "P2/c"^^xsd:string .
-:spacegroup14 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 14 ; :hasSpaceGroupShortSymbol "P2_1/c"^^xsd:string .
-:spacegroup15 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 15 ; :hasSpaceGroupShortSymbol "C2/c"^^xsd:string .
-:spacegroup16 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 16 ; :hasSpaceGroupShortSymbol "P222"^^xsd:string .
-:spacegroup17 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 17 ; :hasSpaceGroupShortSymbol "P222_1"^^xsd:string .
-:spacegroup18 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 18 ; :hasSpaceGroupShortSymbol "P2_12_12"^^xsd:string .
-:spacegroup19 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 19 ; :hasSpaceGroupShortSymbol "P2_12_12_1"^^xsd:string .
-:spacegroup20 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 20 ; :hasSpaceGroupShortSymbol "C222_1"^^xsd:string .
-:spacegroup21 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 21 ; :hasSpaceGroupShortSymbol "C222"^^xsd:string .
-:spacegroup22 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 22 ; :hasSpaceGroupShortSymbol "F222"^^xsd:string .
-:spacegroup23 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 23 ; :hasSpaceGroupShortSymbol "I222"^^xsd:string .
-:spacegroup24 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 24 ; :hasSpaceGroupShortSymbol "I2_12_12_1"^^xsd:string .
-:spacegroup25 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 25 ; :hasSpaceGroupShortSymbol "Pmm2"^^xsd:string .
-:spacegroup26 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 26 ; :hasSpaceGroupShortSymbol "Pmc2_1"^^xsd:string .
-:spacegroup27 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 27 ; :hasSpaceGroupShortSymbol "Pcc2"^^xsd:string .
-:spacegroup28 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 28 ; :hasSpaceGroupShortSymbol "Pma2"^^xsd:string .
-:spacegroup29 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 29 ; :hasSpaceGroupShortSymbol "Pca2_1"^^xsd:string .
-:spacegroup30 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 30 ; :hasSpaceGroupShortSymbol "Pnc2"^^xsd:string .
-:spacegroup31 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 31 ; :hasSpaceGroupShortSymbol "Pmn2_1"^^xsd:string .
-:spacegroup32 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 32 ; :hasSpaceGroupShortSymbol "Pba2"^^xsd:string .
-:spacegroup33 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 33 ; :hasSpaceGroupShortSymbol "Pna2_1"^^xsd:string .
-:spacegroup34 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 34 ; :hasSpaceGroupShortSymbol "Pnn2"^^xsd:string .
-:spacegroup35 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 35 ; :hasSpaceGroupShortSymbol "Cmm2"^^xsd:string .
-:spacegroup36 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 36 ; :hasSpaceGroupShortSymbol "Cmc2_1"^^xsd:string .
-:spacegroup37 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 37 ; :hasSpaceGroupShortSymbol "Ccc2"^^xsd:string .
-:spacegroup38 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 38 ; :hasSpaceGroupShortSymbol "Amm2"^^xsd:string .
-:spacegroup39 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 39 ; :hasSpaceGroupShortSymbol "Aem2"^^xsd:string .
-:spacegroup40 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 40 ; :hasSpaceGroupShortSymbol "Ama2"^^xsd:string .
-:spacegroup41 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 41 ; :hasSpaceGroupShortSymbol "Aea2"^^xsd:string .
-:spacegroup42 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 42 ; :hasSpaceGroupShortSymbol "Fmm2"^^xsd:string .
-:spacegroup43 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 43 ; :hasSpaceGroupShortSymbol "Fdd2"^^xsd:string .
-:spacegroup44 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 44 ; :hasSpaceGroupShortSymbol "Imm2"^^xsd:string .
-:spacegroup45 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 45 ; :hasSpaceGroupShortSymbol "Iba2"^^xsd:string .
-:spacegroup46 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 46 ; :hasSpaceGroupShortSymbol "Ima2"^^xsd:string .
-:spacegroup47 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 47 ; :hasSpaceGroupShortSymbol "Pmmm"^^xsd:string .
-:spacegroup48 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 48 ; :hasSpaceGroupShortSymbol "Pnnn"^^xsd:string .
-:spacegroup49 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 49 ; :hasSpaceGroupShortSymbol "Pccm"^^xsd:string .
-:spacegroup50 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 50 ; :hasSpaceGroupShortSymbol "Pban"^^xsd:string .
-:spacegroup51 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 51 ; :hasSpaceGroupShortSymbol "Pmma"^^xsd:string .
-:spacegroup52 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 52 ; :hasSpaceGroupShortSymbol "Pnna"^^xsd:string .
-:spacegroup53 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 53 ; :hasSpaceGroupShortSymbol "Pmna"^^xsd:string .
-:spacegroup54 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 54 ; :hasSpaceGroupShortSymbol "Pcca"^^xsd:string .
-:spacegroup55 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 55 ; :hasSpaceGroupShortSymbol "Pbam"^^xsd:string .
-:spacegroup56 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 56 ; :hasSpaceGroupShortSymbol "Pccn"^^xsd:string .
-:spacegroup57 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 57 ; :hasSpaceGroupShortSymbol "Pbcm"^^xsd:string .
-:spacegroup58 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 58 ; :hasSpaceGroupShortSymbol "Pnnm"^^xsd:string .
-:spacegroup59 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 59 ; :hasSpaceGroupShortSymbol "Pmmn"^^xsd:string .
-:spacegroup60 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 60 ; :hasSpaceGroupShortSymbol "Pbcn"^^xsd:string .
-:spacegroup61 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 61 ; :hasSpaceGroupShortSymbol "Pbca"^^xsd:string .
-:spacegroup62 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 62 ; :hasSpaceGroupShortSymbol "Pnma"^^xsd:string .
-:spacegroup63 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 63 ; :hasSpaceGroupShortSymbol "Cmcm"^^xsd:string .
-:spacegroup64 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 64 ; :hasSpaceGroupShortSymbol "Cmce"^^xsd:string .
-:spacegroup65 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 65 ; :hasSpaceGroupShortSymbol "Cmmm"^^xsd:string .
-:spacegroup66 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 66 ; :hasSpaceGroupShortSymbol "Cccm"^^xsd:string .
-:spacegroup67 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 67 ; :hasSpaceGroupShortSymbol "Cmme"^^xsd:string .
-:spacegroup68 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 68 ; :hasSpaceGroupShortSymbol "Ccce"^^xsd:string .
-:spacegroup69 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 69 ; :hasSpaceGroupShortSymbol "Fmmm"^^xsd:string .
-:spacegroup70 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 70 ; :hasSpaceGroupShortSymbol "Fddd"^^xsd:string .
-:spacegroup71 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 71 ; :hasSpaceGroupShortSymbol "Immm"^^xsd:string .
-:spacegroup72 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 72 ; :hasSpaceGroupShortSymbol "Ibam"^^xsd:string .
-:spacegroup73 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 73 ; :hasSpaceGroupShortSymbol "Ibca"^^xsd:string .
-:spacegroup74 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 74 ; :hasSpaceGroupShortSymbol "Imma"^^xsd:string .
-:spacegroup75 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 75 ; :hasSpaceGroupShortSymbol "P4"^^xsd:string .
-:spacegroup76 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 76 ; :hasSpaceGroupShortSymbol "P4_1"^^xsd:string .
-:spacegroup77 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 77 ; :hasSpaceGroupShortSymbol "P4_2"^^xsd:string .
-:spacegroup78 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 78 ; :hasSpaceGroupShortSymbol "P4_3"^^xsd:string .
-:spacegroup79 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 79 ; :hasSpaceGroupShortSymbol "I4"^^xsd:string .
-:spacegroup80 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 80 ; :hasSpaceGroupShortSymbol "I4_1"^^xsd:string .
-:spacegroup81 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 81 ; :hasSpaceGroupShortSymbol "P-4"^^xsd:string .
-:spacegroup82 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 82 ; :hasSpaceGroupShortSymbol "I-4"^^xsd:string .
-:spacegroup83 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 83 ; :hasSpaceGroupShortSymbol "P4/m"^^xsd:string .
-:spacegroup84 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 84 ; :hasSpaceGroupShortSymbol "P4_2/m"^^xsd:string .
-:spacegroup85 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 85 ; :hasSpaceGroupShortSymbol "P4/n"^^xsd:string .
-:spacegroup86 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 86 ; :hasSpaceGroupShortSymbol "P4_2/n"^^xsd:string .
-:spacegroup87 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 87 ; :hasSpaceGroupShortSymbol "I4/m"^^xsd:string .
-:spacegroup88 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 88 ; :hasSpaceGroupShortSymbol "I4_1/a"^^xsd:string .
-:spacegroup89 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 89 ; :hasSpaceGroupShortSymbol "P422"^^xsd:string .
-:spacegroup90 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 90 ; :hasSpaceGroupShortSymbol "P42_12"^^xsd:string .
-:spacegroup91 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 91 ; :hasSpaceGroupShortSymbol "P4_122"^^xsd:string .
-:spacegroup92 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 92 ; :hasSpaceGroupShortSymbol "P4_12_12"^^xsd:string .
-:spacegroup93 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 93 ; :hasSpaceGroupShortSymbol "P4_222"^^xsd:string .
-:spacegroup94 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 94 ; :hasSpaceGroupShortSymbol "P4_22_12"^^xsd:string .
-:spacegroup95 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 95 ; :hasSpaceGroupShortSymbol "P4_322"^^xsd:string .
-:spacegroup96 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 96 ; :hasSpaceGroupShortSymbol "P4_32_12"^^xsd:string .
-:spacegroup97 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 97 ; :hasSpaceGroupShortSymbol "I422"^^xsd:string .
-:spacegroup98 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 98 ; :hasSpaceGroupShortSymbol "I4_122"^^xsd:string .
-:spacegroup99 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 99 ; :hasSpaceGroupShortSymbol "P4mm"^^xsd:string .
-:spacegroup100 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 100 ; :hasSpaceGroupShortSymbol "P4bm"^^xsd:string .
-:spacegroup101 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 101 ; :hasSpaceGroupShortSymbol "P4_2cm"^^xsd:string .
-:spacegroup102 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 102 ; :hasSpaceGroupShortSymbol "P4_2nm"^^xsd:string .
-:spacegroup103 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 103 ; :hasSpaceGroupShortSymbol "P4cc"^^xsd:string .
-:spacegroup104 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 104 ; :hasSpaceGroupShortSymbol "P4nc"^^xsd:string .
-:spacegroup105 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 105 ; :hasSpaceGroupShortSymbol "P4_2mc"^^xsd:string .
-:spacegroup106 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 106 ; :hasSpaceGroupShortSymbol "P4_2bc"^^xsd:string .
-:spacegroup107 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 107 ; :hasSpaceGroupShortSymbol "I4mm"^^xsd:string .
-:spacegroup108 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 108 ; :hasSpaceGroupShortSymbol "I4cm"^^xsd:string .
-:spacegroup109 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 109 ; :hasSpaceGroupShortSymbol "I4_1md"^^xsd:string .
-:spacegroup110 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 110 ; :hasSpaceGroupShortSymbol "I4_1cd"^^xsd:string .
-:spacegroup111 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 111 ; :hasSpaceGroupShortSymbol "P-42m"^^xsd:string .
-:spacegroup112 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 112 ; :hasSpaceGroupShortSymbol "P-42c"^^xsd:string .
-:spacegroup113 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 113 ; :hasSpaceGroupShortSymbol "P-42_1m"^^xsd:string .
-:spacegroup114 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 114 ; :hasSpaceGroupShortSymbol "P-42_1c"^^xsd:string .
-:spacegroup115 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 115 ; :hasSpaceGroupShortSymbol "P-4m2"^^xsd:string .
-:spacegroup116 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 116 ; :hasSpaceGroupShortSymbol "P-4c2"^^xsd:string .
-:spacegroup117 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 117 ; :hasSpaceGroupShortSymbol "P-4b2"^^xsd:string .
-:spacegroup118 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 118 ; :hasSpaceGroupShortSymbol "P-4n2"^^xsd:string .
-:spacegroup119 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 119 ; :hasSpaceGroupShortSymbol "I-4m2"^^xsd:string .
-:spacegroup120 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 120 ; :hasSpaceGroupShortSymbol "I-4c2"^^xsd:string .
-:spacegroup121 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 121 ; :hasSpaceGroupShortSymbol "I-42m"^^xsd:string .
-:spacegroup122 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 122 ; :hasSpaceGroupShortSymbol "I-42d"^^xsd:string .
-:spacegroup123 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 123 ; :hasSpaceGroupShortSymbol "P4/mmm"^^xsd:string .
-:spacegroup124 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 124 ; :hasSpaceGroupShortSymbol "P4/mcc"^^xsd:string .
-:spacegroup125 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 125 ; :hasSpaceGroupShortSymbol "P4/nbm"^^xsd:string .
-:spacegroup126 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 126 ; :hasSpaceGroupShortSymbol "P4/nnc"^^xsd:string .
-:spacegroup127 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 127 ; :hasSpaceGroupShortSymbol "P4/mbm"^^xsd:string .
-:spacegroup128 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 128 ; :hasSpaceGroupShortSymbol "P4/mnc"^^xsd:string .
-:spacegroup129 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 129 ; :hasSpaceGroupShortSymbol "P4/nmm"^^xsd:string .
-:spacegroup130 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 130 ; :hasSpaceGroupShortSymbol "P4/ncc"^^xsd:string .
-:spacegroup131 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 131 ; :hasSpaceGroupShortSymbol "P4_2/mmc"^^xsd:string .
-:spacegroup132 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 132 ; :hasSpaceGroupShortSymbol "P4_2/mcm"^^xsd:string .
-:spacegroup133 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 133 ; :hasSpaceGroupShortSymbol "P4_2/nbc"^^xsd:string .
-:spacegroup134 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 134 ; :hasSpaceGroupShortSymbol "P4_2/nnm"^^xsd:string .
-:spacegroup135 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 135 ; :hasSpaceGroupShortSymbol "P4_2/mbc"^^xsd:string .
-:spacegroup136 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 136 ; :hasSpaceGroupShortSymbol "P4_2/mnm"^^xsd:string .
-:spacegroup137 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 137 ; :hasSpaceGroupShortSymbol "P4_2/nmc"^^xsd:string .
-:spacegroup138 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 138 ; :hasSpaceGroupShortSymbol "P4_2/ncm"^^xsd:string .
-:spacegroup139 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 139 ; :hasSpaceGroupShortSymbol "I4/mmm"^^xsd:string .
-:spacegroup140 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 140 ; :hasSpaceGroupShortSymbol "I4/mcm"^^xsd:string .
-:spacegroup141 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 141 ; :hasSpaceGroupShortSymbol "I4_1/amd"^^xsd:string .
-:spacegroup142 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 142 ; :hasSpaceGroupShortSymbol "I4_1/acd"^^xsd:string .
-:spacegroup143 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 143 ; :hasSpaceGroupShortSymbol "P3"^^xsd:string .
-:spacegroup144 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 144 ; :hasSpaceGroupShortSymbol "P3_1"^^xsd:string .
-:spacegroup145 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 145 ; :hasSpaceGroupShortSymbol "P3_2"^^xsd:string .
-:spacegroup146 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 146 ; :hasSpaceGroupShortSymbol "R3"^^xsd:string .
-:spacegroup147 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 147 ; :hasSpaceGroupShortSymbol "P-3"^^xsd:string .
-:spacegroup148 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 148 ; :hasSpaceGroupShortSymbol "R-3"^^xsd:string .
-:spacegroup149 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 149 ; :hasSpaceGroupShortSymbol "P312"^^xsd:string .
-:spacegroup150 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 150 ; :hasSpaceGroupShortSymbol "P321"^^xsd:string .
-:spacegroup151 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 151 ; :hasSpaceGroupShortSymbol "P3_112"^^xsd:string .
-:spacegroup152 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 152 ; :hasSpaceGroupShortSymbol "P3_121"^^xsd:string .
-:spacegroup153 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 153 ; :hasSpaceGroupShortSymbol "P3_212"^^xsd:string .
-:spacegroup154 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 154 ; :hasSpaceGroupShortSymbol "P3_221"^^xsd:string .
-:spacegroup155 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 155 ; :hasSpaceGroupShortSymbol "R32"^^xsd:string .
-:spacegroup156 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 156 ; :hasSpaceGroupShortSymbol "P3m1"^^xsd:string .
-:spacegroup157 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 157 ; :hasSpaceGroupShortSymbol "P31m"^^xsd:string .
-:spacegroup158 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 158 ; :hasSpaceGroupShortSymbol "P3c1"^^xsd:string .
-:spacegroup159 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 159 ; :hasSpaceGroupShortSymbol "P31c"^^xsd:string .
-:spacegroup160 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 160 ; :hasSpaceGroupShortSymbol "R3m"^^xsd:string .
-:spacegroup161 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 161 ; :hasSpaceGroupShortSymbol "R3c"^^xsd:string .
-:spacegroup162 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 162 ; :hasSpaceGroupShortSymbol "P-31m"^^xsd:string .
-:spacegroup163 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 163 ; :hasSpaceGroupShortSymbol "P-31c"^^xsd:string .
-:spacegroup164 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 164 ; :hasSpaceGroupShortSymbol "P-3m1"^^xsd:string .
-:spacegroup165 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 165 ; :hasSpaceGroupShortSymbol "P-3c1"^^xsd:string .
-:spacegroup166 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 166 ; :hasSpaceGroupShortSymbol "R-3m"^^xsd:string .
-:spacegroup167 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 167 ; :hasSpaceGroupShortSymbol "R-3c"^^xsd:string .
-:spacegroup168 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 168 ; :hasSpaceGroupShortSymbol "P6"^^xsd:string .
-:spacegroup169 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 169 ; :hasSpaceGroupShortSymbol "P6_1"^^xsd:string .
-:spacegroup170 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 170 ; :hasSpaceGroupShortSymbol "P6_5"^^xsd:string .
-:spacegroup171 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 171 ; :hasSpaceGroupShortSymbol "P6_2"^^xsd:string .
-:spacegroup172 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 172 ; :hasSpaceGroupShortSymbol "P6_4"^^xsd:string .
-:spacegroup173 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 173 ; :hasSpaceGroupShortSymbol "P6_3"^^xsd:string .
-:spacegroup174 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 174 ; :hasSpaceGroupShortSymbol "P-6"^^xsd:string .
-:spacegroup175 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 175 ; :hasSpaceGroupShortSymbol "P6/m"^^xsd:string .
-:spacegroup176 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 176 ; :hasSpaceGroupShortSymbol "P6_3/m"^^xsd:string .
-:spacegroup177 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 177 ; :hasSpaceGroupShortSymbol "P622"^^xsd:string .
-:spacegroup178 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 178 ; :hasSpaceGroupShortSymbol "P6_122"^^xsd:string .
-:spacegroup179 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 179 ; :hasSpaceGroupShortSymbol "P6_522"^^xsd:string .
-:spacegroup180 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 180 ; :hasSpaceGroupShortSymbol "P6_222"^^xsd:string .
-:spacegroup181 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 181 ; :hasSpaceGroupShortSymbol "P6_422"^^xsd:string .
-:spacegroup182 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 182 ; :hasSpaceGroupShortSymbol "P6_322"^^xsd:string .
-:spacegroup183 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 183 ; :hasSpaceGroupShortSymbol "P6mm"^^xsd:string .
-:spacegroup184 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 184 ; :hasSpaceGroupShortSymbol "P6cc"^^xsd:string .
-:spacegroup185 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 185 ; :hasSpaceGroupShortSymbol "P6_3cm"^^xsd:string .
-:spacegroup186 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 186 ; :hasSpaceGroupShortSymbol "P6_3mc"^^xsd:string .
-:spacegroup187 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 187 ; :hasSpaceGroupShortSymbol "P-6m2"^^xsd:string .
-:spacegroup188 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 188 ; :hasSpaceGroupShortSymbol "P-6c2"^^xsd:string .
-:spacegroup189 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 189 ; :hasSpaceGroupShortSymbol "P-62m"^^xsd:string .
-:spacegroup190 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 190 ; :hasSpaceGroupShortSymbol "P-62c"^^xsd:string .
-:spacegroup191 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 191 ; :hasSpaceGroupShortSymbol "P6/mmm"^^xsd:string .
-:spacegroup192 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 192 ; :hasSpaceGroupShortSymbol "P6/mcc"^^xsd:string .
-:spacegroup193 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 193 ; :hasSpaceGroupShortSymbol "P6_3/mcm"^^xsd:string .
-:spacegroup194 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 194 ; :hasSpaceGroupShortSymbol "P6_3/mmc"^^xsd:string .
-:spacegroup195 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 195 ; :hasSpaceGroupShortSymbol "P23"^^xsd:string .
-:spacegroup196 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 196 ; :hasSpaceGroupShortSymbol "F23"^^xsd:string .
-:spacegroup197 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 197 ; :hasSpaceGroupShortSymbol "I23"^^xsd:string .
-:spacegroup198 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 198 ; :hasSpaceGroupShortSymbol "P2_13"^^xsd:string .
-:spacegroup199 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 199 ; :hasSpaceGroupShortSymbol "I2_13"^^xsd:string .
-:spacegroup200 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 200 ; :hasSpaceGroupShortSymbol "Pm-3"^^xsd:string .
-:spacegroup201 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 201 ; :hasSpaceGroupShortSymbol "Pn-3"^^xsd:string .
-:spacegroup202 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 202 ; :hasSpaceGroupShortSymbol "Fm-3"^^xsd:string .
-:spacegroup203 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 203 ; :hasSpaceGroupShortSymbol "Fd-3"^^xsd:string .
-:spacegroup204 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 204 ; :hasSpaceGroupShortSymbol "Im-3"^^xsd:string .
-:spacegroup205 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 205 ; :hasSpaceGroupShortSymbol "Pa-3"^^xsd:string .
-:spacegroup206 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 206 ; :hasSpaceGroupShortSymbol "Ia-3"^^xsd:string .
-:spacegroup207 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 207 ; :hasSpaceGroupShortSymbol "P432"^^xsd:string .
-:spacegroup208 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 208 ; :hasSpaceGroupShortSymbol "P4_232"^^xsd:string .
-:spacegroup209 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 209 ; :hasSpaceGroupShortSymbol "F432"^^xsd:string .
-:spacegroup210 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 210 ; :hasSpaceGroupShortSymbol "F4_132"^^xsd:string .
-:spacegroup211 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 211 ; :hasSpaceGroupShortSymbol "I432"^^xsd:string .
-:spacegroup212 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 212 ; :hasSpaceGroupShortSymbol "P4_332"^^xsd:string .
-:spacegroup213 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 213 ; :hasSpaceGroupShortSymbol "P4_132"^^xsd:string .
-:spacegroup214 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 214 ; :hasSpaceGroupShortSymbol "I4_132"^^xsd:string .
-:spacegroup215 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 215 ; :hasSpaceGroupShortSymbol "P-43m"^^xsd:string .
-:spacegroup216 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 216 ; :hasSpaceGroupShortSymbol "F-43m"^^xsd:string .
-:spacegroup217 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 217 ; :hasSpaceGroupShortSymbol "I-43m"^^xsd:string .
-:spacegroup218 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 218 ; :hasSpaceGroupShortSymbol "P-43n"^^xsd:string .
-:spacegroup219 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 219 ; :hasSpaceGroupShortSymbol "F-43c"^^xsd:string .
-:spacegroup220 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 220 ; :hasSpaceGroupShortSymbol "I-43d"^^xsd:string .
-:spacegroup221 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 221 ; :hasSpaceGroupShortSymbol "Pm-3m"^^xsd:string .
-:spacegroup222 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 222 ; :hasSpaceGroupShortSymbol "Pn-3n"^^xsd:string .
-:spacegroup223 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 223 ; :hasSpaceGroupShortSymbol "Pm-3n"^^xsd:string .
-:spacegroup224 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 224 ; :hasSpaceGroupShortSymbol "Pn-3m"^^xsd:string .
-:spacegroup225 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 225 ; :hasSpaceGroupShortSymbol "Fm-3m"^^xsd:string .
-:spacegroup226 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 226 ; :hasSpaceGroupShortSymbol "Fm-3c"^^xsd:string .
-:spacegroup227 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 227 ; :hasSpaceGroupShortSymbol "Fd-3m"^^xsd:string .
-:spacegroup228 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 228 ; :hasSpaceGroupShortSymbol "Fd-3c"^^xsd:string .
-:spacegroup229 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 229 ; :hasSpaceGroupShortSymbol "Im-3m"^^xsd:string .
-:spacegroup230 rdf:type owl:NamedIndividual , :SpaceGroup ; :hasSpaceGroupNumber 230 ; :hasSpaceGroupShortSymbol "Ia-3d"^^xsd:string .
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup10
+:spacegroup10 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 10 ;
+              :hasSpaceGroupShortSymbol "P2/m"^^xsd:string .
 
 
+###  http://www.stream-ontology.com/crystalstructure#spacegroup100
+:spacegroup100 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 100 ;
+               :hasSpaceGroupShortSymbol "P4bm"^^xsd:string .
 
-:crystalpointgroupC1 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C1"^^xsd:string ; :hasPointGroupShortSymbol "1"^^xsd:string .
-:crystalpointgroupCi rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "Ci"^^xsd:string ; :hasPointGroupShortSymbol "-1"^^xsd:string .
-:crystalpointgroupC2 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C2"^^xsd:string ; :hasPointGroupShortSymbol "2"^^xsd:string .
-:crystalpointgroupCs rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "Cs"^^xsd:string ; :hasPointGroupShortSymbol "m"^^xsd:string .
-:crystalpointgroupC2h rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C2h"^^xsd:string ; :hasPointGroupShortSymbol "2/m"^^xsd:string .
-:crystalpointgroupD2 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D2"^^xsd:string ; :hasPointGroupShortSymbol "222"^^xsd:string .
-:crystalpointgroupC2v rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C2v"^^xsd:string ; :hasPointGroupShortSymbol "mm2"^^xsd:string .
-:crystalpointgroupD2h rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D2h"^^xsd:string ; :hasPointGroupShortSymbol "mmm"^^xsd:string .
-:crystalpointgroupC4 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C4"^^xsd:string ; :hasPointGroupShortSymbol "4"^^xsd:string .
-:crystalpointgroupS4 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "S4"^^xsd:string ; :hasPointGroupShortSymbol "-4"^^xsd:string .
-:crystalpointgroupC4h rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C4h"^^xsd:string ; :hasPointGroupShortSymbol "4/m"^^xsd:string .
-:crystalpointgroupD4 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D4"^^xsd:string ; :hasPointGroupShortSymbol "422"^^xsd:string .
-:crystalpointgroupC4v rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C4v"^^xsd:string ; :hasPointGroupShortSymbol "4mm"^^xsd:string .
-:crystalpointgroupD2d rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D2d"^^xsd:string ; :hasPointGroupShortSymbol "-42m"^^xsd:string .
-:crystalpointgroupD4h rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D4h"^^xsd:string ; :hasPointGroupShortSymbol "4/mmm"^^xsd:string .
-:crystalpointgroupC3 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C3"^^xsd:string ; :hasPointGroupShortSymbol "3"^^xsd:string .
-:crystalpointgroupC3i rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C3i"^^xsd:string ; :hasPointGroupShortSymbol "-3"^^xsd:string .
-:crystalpointgroupD3 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D3"^^xsd:string ; :hasPointGroupShortSymbol "32"^^xsd:string .
-:crystalpointgroupC3v rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C3v"^^xsd:string ; :hasPointGroupShortSymbol "3m"^^xsd:string .
-:crystalpointgroupD3d rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D3d"^^xsd:string ; :hasPointGroupShortSymbol "-3m"^^xsd:string .
-:crystalpointgroupC6 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C6"^^xsd:string ; :hasPointGroupShortSymbol "6"^^xsd:string .
-:crystalpointgroupC3h rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C3h"^^xsd:string ; :hasPointGroupShortSymbol "-6"^^xsd:string .
-:crystalpointgroupC6h rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C6h"^^xsd:string ; :hasPointGroupShortSymbol "6/m"^^xsd:string .
-:crystalpointgroupD6 rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D6"^^xsd:string ; :hasPointGroupShortSymbol "622"^^xsd:string .
-:crystalpointgroupC6v rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "C6v"^^xsd:string ; :hasPointGroupShortSymbol "6mm"^^xsd:string .
-:crystalpointgroupD3h rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D3h"^^xsd:string ; :hasPointGroupShortSymbol "62m"^^xsd:string .
-:crystalpointgroupD6h rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "D6h"^^xsd:string ; :hasPointGroupShortSymbol "6/mmm"^^xsd:string .
-:crystalpointgroupT rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "T"^^xsd:string ; :hasPointGroupShortSymbol "23"^^xsd:string .
-:crystalpointgroupTh rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "Th"^^xsd:string ; :hasPointGroupShortSymbol "m-3"^^xsd:string .
-:crystalpointgroupO rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "O"^^xsd:string ; :hasPointGroupShortSymbol "432"^^xsd:string .
-:crystalpointgroupTd rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "Td"^^xsd:string ; :hasPointGroupShortSymbol "-43m"^^xsd:string .
-:crystalpointgroupOh rdf:type owl:NamedIndividual , :CrystalPointGroup ; :hasSchoenflies "Oh"^^xsd:string ; :hasPointGroupShortSymbol "m-3m"^^xsd:string .
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup101
+:spacegroup101 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 101 ;
+               :hasSpaceGroupShortSymbol "P4_2cm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup102
+:spacegroup102 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 102 ;
+               :hasSpaceGroupShortSymbol "P4_2nm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup103
+:spacegroup103 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 103 ;
+               :hasSpaceGroupShortSymbol "P4cc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup104
+:spacegroup104 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 104 ;
+               :hasSpaceGroupShortSymbol "P4nc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup105
+:spacegroup105 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 105 ;
+               :hasSpaceGroupShortSymbol "P4_2mc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup106
+:spacegroup106 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 106 ;
+               :hasSpaceGroupShortSymbol "P4_2bc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup107
+:spacegroup107 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 107 ;
+               :hasSpaceGroupShortSymbol "I4mm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup108
+:spacegroup108 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 108 ;
+               :hasSpaceGroupShortSymbol "I4cm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup109
+:spacegroup109 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 109 ;
+               :hasSpaceGroupShortSymbol "I4_1md"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup11
+:spacegroup11 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 11 ;
+              :hasSpaceGroupShortSymbol "P2_1/m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup110
+:spacegroup110 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 110 ;
+               :hasSpaceGroupShortSymbol "I4_1cd"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup111
+:spacegroup111 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 111 ;
+               :hasSpaceGroupShortSymbol "P-42m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup112
+:spacegroup112 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 112 ;
+               :hasSpaceGroupShortSymbol "P-42c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup113
+:spacegroup113 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 113 ;
+               :hasSpaceGroupShortSymbol "P-42_1m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup114
+:spacegroup114 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 114 ;
+               :hasSpaceGroupShortSymbol "P-42_1c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup115
+:spacegroup115 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 115 ;
+               :hasSpaceGroupShortSymbol "P-4m2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup116
+:spacegroup116 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 116 ;
+               :hasSpaceGroupShortSymbol "P-4c2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup117
+:spacegroup117 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 117 ;
+               :hasSpaceGroupShortSymbol "P-4b2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup118
+:spacegroup118 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 118 ;
+               :hasSpaceGroupShortSymbol "P-4n2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup119
+:spacegroup119 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 119 ;
+               :hasSpaceGroupShortSymbol "I-4m2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup12
+:spacegroup12 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 12 ;
+              :hasSpaceGroupShortSymbol "C2/m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup120
+:spacegroup120 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 120 ;
+               :hasSpaceGroupShortSymbol "I-4c2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup121
+:spacegroup121 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 121 ;
+               :hasSpaceGroupShortSymbol "I-42m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup122
+:spacegroup122 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 122 ;
+               :hasSpaceGroupShortSymbol "I-42d"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup123
+:spacegroup123 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 123 ;
+               :hasSpaceGroupShortSymbol "P4/mmm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup124
+:spacegroup124 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 124 ;
+               :hasSpaceGroupShortSymbol "P4/mcc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup125
+:spacegroup125 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 125 ;
+               :hasSpaceGroupShortSymbol "P4/nbm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup126
+:spacegroup126 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 126 ;
+               :hasSpaceGroupShortSymbol "P4/nnc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup127
+:spacegroup127 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 127 ;
+               :hasSpaceGroupShortSymbol "P4/mbm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup128
+:spacegroup128 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 128 ;
+               :hasSpaceGroupShortSymbol "P4/mnc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup129
+:spacegroup129 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 129 ;
+               :hasSpaceGroupShortSymbol "P4/nmm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup13
+:spacegroup13 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 13 ;
+              :hasSpaceGroupShortSymbol "P2/c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup130
+:spacegroup130 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 130 ;
+               :hasSpaceGroupShortSymbol "P4/ncc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup131
+:spacegroup131 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 131 ;
+               :hasSpaceGroupShortSymbol "P4_2/mmc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup132
+:spacegroup132 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 132 ;
+               :hasSpaceGroupShortSymbol "P4_2/mcm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup133
+:spacegroup133 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 133 ;
+               :hasSpaceGroupShortSymbol "P4_2/nbc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup134
+:spacegroup134 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 134 ;
+               :hasSpaceGroupShortSymbol "P4_2/nnm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup135
+:spacegroup135 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 135 ;
+               :hasSpaceGroupShortSymbol "P4_2/mbc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup136
+:spacegroup136 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 136 ;
+               :hasSpaceGroupShortSymbol "P4_2/mnm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup137
+:spacegroup137 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 137 ;
+               :hasSpaceGroupShortSymbol "P4_2/nmc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup138
+:spacegroup138 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 138 ;
+               :hasSpaceGroupShortSymbol "P4_2/ncm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup139
+:spacegroup139 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 139 ;
+               :hasSpaceGroupShortSymbol "I4/mmm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup14
+:spacegroup14 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 14 ;
+              :hasSpaceGroupShortSymbol "P2_1/c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup140
+:spacegroup140 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 140 ;
+               :hasSpaceGroupShortSymbol "I4/mcm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup141
+:spacegroup141 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 141 ;
+               :hasSpaceGroupShortSymbol "I4_1/amd"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup142
+:spacegroup142 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 142 ;
+               :hasSpaceGroupShortSymbol "I4_1/acd"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup143
+:spacegroup143 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 143 ;
+               :hasSpaceGroupShortSymbol "P3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup144
+:spacegroup144 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 144 ;
+               :hasSpaceGroupShortSymbol "P3_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup145
+:spacegroup145 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 145 ;
+               :hasSpaceGroupShortSymbol "P3_2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup146
+:spacegroup146 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 146 ;
+               :hasSpaceGroupShortSymbol "R3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup147
+:spacegroup147 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 147 ;
+               :hasSpaceGroupShortSymbol "P-3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup148
+:spacegroup148 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 148 ;
+               :hasSpaceGroupShortSymbol "R-3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup149
+:spacegroup149 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 149 ;
+               :hasSpaceGroupShortSymbol "P312"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup15
+:spacegroup15 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 15 ;
+              :hasSpaceGroupShortSymbol "C2/c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup150
+:spacegroup150 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 150 ;
+               :hasSpaceGroupShortSymbol "P321"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup151
+:spacegroup151 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 151 ;
+               :hasSpaceGroupShortSymbol "P3_112"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup152
+:spacegroup152 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 152 ;
+               :hasSpaceGroupShortSymbol "P3_121"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup153
+:spacegroup153 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 153 ;
+               :hasSpaceGroupShortSymbol "P3_212"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup154
+:spacegroup154 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 154 ;
+               :hasSpaceGroupShortSymbol "P3_221"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup155
+:spacegroup155 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 155 ;
+               :hasSpaceGroupShortSymbol "R32"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup156
+:spacegroup156 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 156 ;
+               :hasSpaceGroupShortSymbol "P3m1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup157
+:spacegroup157 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 157 ;
+               :hasSpaceGroupShortSymbol "P31m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup158
+:spacegroup158 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 158 ;
+               :hasSpaceGroupShortSymbol "P3c1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup159
+:spacegroup159 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 159 ;
+               :hasSpaceGroupShortSymbol "P31c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup16
+:spacegroup16 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 16 ;
+              :hasSpaceGroupShortSymbol "P222"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup160
+:spacegroup160 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 160 ;
+               :hasSpaceGroupShortSymbol "R3m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup161
+:spacegroup161 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 161 ;
+               :hasSpaceGroupShortSymbol "R3c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup162
+:spacegroup162 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 162 ;
+               :hasSpaceGroupShortSymbol "P-31m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup163
+:spacegroup163 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 163 ;
+               :hasSpaceGroupShortSymbol "P-31c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup164
+:spacegroup164 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 164 ;
+               :hasSpaceGroupShortSymbol "P-3m1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup165
+:spacegroup165 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 165 ;
+               :hasSpaceGroupShortSymbol "P-3c1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup166
+:spacegroup166 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 166 ;
+               :hasSpaceGroupShortSymbol "R-3m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup167
+:spacegroup167 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 167 ;
+               :hasSpaceGroupShortSymbol "R-3c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup168
+:spacegroup168 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 168 ;
+               :hasSpaceGroupShortSymbol "P6"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup169
+:spacegroup169 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 169 ;
+               :hasSpaceGroupShortSymbol "P6_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup17
+:spacegroup17 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 17 ;
+              :hasSpaceGroupShortSymbol "P222_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup170
+:spacegroup170 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 170 ;
+               :hasSpaceGroupShortSymbol "P6_5"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup171
+:spacegroup171 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 171 ;
+               :hasSpaceGroupShortSymbol "P6_2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup172
+:spacegroup172 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 172 ;
+               :hasSpaceGroupShortSymbol "P6_4"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup173
+:spacegroup173 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 173 ;
+               :hasSpaceGroupShortSymbol "P6_3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup174
+:spacegroup174 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 174 ;
+               :hasSpaceGroupShortSymbol "P-6"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup175
+:spacegroup175 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 175 ;
+               :hasSpaceGroupShortSymbol "P6/m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup176
+:spacegroup176 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 176 ;
+               :hasSpaceGroupShortSymbol "P6_3/m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup177
+:spacegroup177 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 177 ;
+               :hasSpaceGroupShortSymbol "P622"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup178
+:spacegroup178 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 178 ;
+               :hasSpaceGroupShortSymbol "P6_122"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup179
+:spacegroup179 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 179 ;
+               :hasSpaceGroupShortSymbol "P6_522"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup18
+:spacegroup18 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 18 ;
+              :hasSpaceGroupShortSymbol "P2_12_12"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup180
+:spacegroup180 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 180 ;
+               :hasSpaceGroupShortSymbol "P6_222"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup181
+:spacegroup181 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 181 ;
+               :hasSpaceGroupShortSymbol "P6_422"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup182
+:spacegroup182 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 182 ;
+               :hasSpaceGroupShortSymbol "P6_322"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup183
+:spacegroup183 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 183 ;
+               :hasSpaceGroupShortSymbol "P6mm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup184
+:spacegroup184 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 184 ;
+               :hasSpaceGroupShortSymbol "P6cc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup185
+:spacegroup185 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 185 ;
+               :hasSpaceGroupShortSymbol "P6_3cm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup186
+:spacegroup186 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 186 ;
+               :hasSpaceGroupShortSymbol "P6_3mc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup187
+:spacegroup187 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 187 ;
+               :hasSpaceGroupShortSymbol "P-6m2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup188
+:spacegroup188 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 188 ;
+               :hasSpaceGroupShortSymbol "P-6c2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup189
+:spacegroup189 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 189 ;
+               :hasSpaceGroupShortSymbol "P-62m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup19
+:spacegroup19 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 19 ;
+              :hasSpaceGroupShortSymbol "P2_12_12_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup190
+:spacegroup190 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 190 ;
+               :hasSpaceGroupShortSymbol "P-62c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup191
+:spacegroup191 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 191 ;
+               :hasSpaceGroupShortSymbol "P6/mmm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup192
+:spacegroup192 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 192 ;
+               :hasSpaceGroupShortSymbol "P6/mcc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup193
+:spacegroup193 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 193 ;
+               :hasSpaceGroupShortSymbol "P6_3/mcm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup194
+:spacegroup194 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 194 ;
+               :hasSpaceGroupShortSymbol "P6_3/mmc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup195
+:spacegroup195 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 195 ;
+               :hasSpaceGroupShortSymbol "P23"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup196
+:spacegroup196 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 196 ;
+               :hasSpaceGroupShortSymbol "F23"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup197
+:spacegroup197 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 197 ;
+               :hasSpaceGroupShortSymbol "I23"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup198
+:spacegroup198 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 198 ;
+               :hasSpaceGroupShortSymbol "P2_13"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup199
+:spacegroup199 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 199 ;
+               :hasSpaceGroupShortSymbol "I2_13"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup2
+:spacegroup2 rdf:type owl:NamedIndividual ,
+                      :SpaceGroup ;
+             :hasSpaceGroupNumber 2 ;
+             :hasSpaceGroupShortSymbol "P-1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup20
+:spacegroup20 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 20 ;
+              :hasSpaceGroupShortSymbol "C222_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup200
+:spacegroup200 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 200 ;
+               :hasSpaceGroupShortSymbol "Pm-3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup201
+:spacegroup201 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 201 ;
+               :hasSpaceGroupShortSymbol "Pn-3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup202
+:spacegroup202 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 202 ;
+               :hasSpaceGroupShortSymbol "Fm-3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup203
+:spacegroup203 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 203 ;
+               :hasSpaceGroupShortSymbol "Fd-3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup204
+:spacegroup204 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 204 ;
+               :hasSpaceGroupShortSymbol "Im-3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup205
+:spacegroup205 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 205 ;
+               :hasSpaceGroupShortSymbol "Pa-3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup206
+:spacegroup206 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 206 ;
+               :hasSpaceGroupShortSymbol "Ia-3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup207
+:spacegroup207 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 207 ;
+               :hasSpaceGroupShortSymbol "P432"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup208
+:spacegroup208 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 208 ;
+               :hasSpaceGroupShortSymbol "P4_232"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup209
+:spacegroup209 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 209 ;
+               :hasSpaceGroupShortSymbol "F432"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup21
+:spacegroup21 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 21 ;
+              :hasSpaceGroupShortSymbol "C222"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup210
+:spacegroup210 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 210 ;
+               :hasSpaceGroupShortSymbol "F4_132"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup211
+:spacegroup211 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 211 ;
+               :hasSpaceGroupShortSymbol "I432"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup212
+:spacegroup212 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 212 ;
+               :hasSpaceGroupShortSymbol "P4_332"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup213
+:spacegroup213 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 213 ;
+               :hasSpaceGroupShortSymbol "P4_132"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup214
+:spacegroup214 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 214 ;
+               :hasSpaceGroupShortSymbol "I4_132"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup215
+:spacegroup215 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 215 ;
+               :hasSpaceGroupShortSymbol "P-43m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup216
+:spacegroup216 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 216 ;
+               :hasSpaceGroupShortSymbol "F-43m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup217
+:spacegroup217 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 217 ;
+               :hasSpaceGroupShortSymbol "I-43m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup218
+:spacegroup218 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 218 ;
+               :hasSpaceGroupShortSymbol "P-43n"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup219
+:spacegroup219 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 219 ;
+               :hasSpaceGroupShortSymbol "F-43c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup22
+:spacegroup22 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 22 ;
+              :hasSpaceGroupShortSymbol "F222"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup220
+:spacegroup220 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 220 ;
+               :hasSpaceGroupShortSymbol "I-43d"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup221
+:spacegroup221 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 221 ;
+               :hasSpaceGroupShortSymbol "Pm-3m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup222
+:spacegroup222 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 222 ;
+               :hasSpaceGroupShortSymbol "Pn-3n"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup223
+:spacegroup223 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 223 ;
+               :hasSpaceGroupShortSymbol "Pm-3n"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup224
+:spacegroup224 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 224 ;
+               :hasSpaceGroupShortSymbol "Pn-3m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup225
+:spacegroup225 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 225 ;
+               :hasSpaceGroupShortSymbol "Fm-3m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup226
+:spacegroup226 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 226 ;
+               :hasSpaceGroupShortSymbol "Fm-3c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup227
+:spacegroup227 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 227 ;
+               :hasSpaceGroupShortSymbol "Fd-3m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup228
+:spacegroup228 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 228 ;
+               :hasSpaceGroupShortSymbol "Fd-3c"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup229
+:spacegroup229 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 229 ;
+               :hasSpaceGroupShortSymbol "Im-3m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup23
+:spacegroup23 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 23 ;
+              :hasSpaceGroupShortSymbol "I222"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup230
+:spacegroup230 rdf:type owl:NamedIndividual ,
+                        :SpaceGroup ;
+               :hasSpaceGroupNumber 230 ;
+               :hasSpaceGroupShortSymbol "Ia-3d"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup24
+:spacegroup24 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 24 ;
+              :hasSpaceGroupShortSymbol "I2_12_12_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup25
+:spacegroup25 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 25 ;
+              :hasSpaceGroupShortSymbol "Pmm2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup26
+:spacegroup26 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 26 ;
+              :hasSpaceGroupShortSymbol "Pmc2_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup27
+:spacegroup27 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 27 ;
+              :hasSpaceGroupShortSymbol "Pcc2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup28
+:spacegroup28 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 28 ;
+              :hasSpaceGroupShortSymbol "Pma2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup29
+:spacegroup29 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 29 ;
+              :hasSpaceGroupShortSymbol "Pca2_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup3
+:spacegroup3 rdf:type owl:NamedIndividual ,
+                      :SpaceGroup ;
+             :hasSpaceGroupNumber 3 ;
+             :hasSpaceGroupShortSymbol "P2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup30
+:spacegroup30 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 30 ;
+              :hasSpaceGroupShortSymbol "Pnc2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup31
+:spacegroup31 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 31 ;
+              :hasSpaceGroupShortSymbol "Pmn2_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup32
+:spacegroup32 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 32 ;
+              :hasSpaceGroupShortSymbol "Pba2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup33
+:spacegroup33 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 33 ;
+              :hasSpaceGroupShortSymbol "Pna2_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup34
+:spacegroup34 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 34 ;
+              :hasSpaceGroupShortSymbol "Pnn2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup35
+:spacegroup35 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 35 ;
+              :hasSpaceGroupShortSymbol "Cmm2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup36
+:spacegroup36 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 36 ;
+              :hasSpaceGroupShortSymbol "Cmc2_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup37
+:spacegroup37 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 37 ;
+              :hasSpaceGroupShortSymbol "Ccc2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup38
+:spacegroup38 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 38 ;
+              :hasSpaceGroupShortSymbol "Amm2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup39
+:spacegroup39 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 39 ;
+              :hasSpaceGroupShortSymbol "Aem2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup4
+:spacegroup4 rdf:type owl:NamedIndividual ,
+                      :SpaceGroup ;
+             :hasSpaceGroupNumber 4 ;
+             :hasSpaceGroupShortSymbol "P2_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup40
+:spacegroup40 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 40 ;
+              :hasSpaceGroupShortSymbol "Ama2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup41
+:spacegroup41 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 41 ;
+              :hasSpaceGroupShortSymbol "Aea2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup42
+:spacegroup42 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 42 ;
+              :hasSpaceGroupShortSymbol "Fmm2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup43
+:spacegroup43 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 43 ;
+              :hasSpaceGroupShortSymbol "Fdd2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup44
+:spacegroup44 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 44 ;
+              :hasSpaceGroupShortSymbol "Imm2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup45
+:spacegroup45 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 45 ;
+              :hasSpaceGroupShortSymbol "Iba2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup46
+:spacegroup46 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 46 ;
+              :hasSpaceGroupShortSymbol "Ima2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup47
+:spacegroup47 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 47 ;
+              :hasSpaceGroupShortSymbol "Pmmm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup48
+:spacegroup48 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 48 ;
+              :hasSpaceGroupShortSymbol "Pnnn"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup49
+:spacegroup49 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 49 ;
+              :hasSpaceGroupShortSymbol "Pccm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup5
+:spacegroup5 rdf:type owl:NamedIndividual ,
+                      :SpaceGroup ;
+             :hasSpaceGroupNumber 5 ;
+             :hasSpaceGroupShortSymbol "C2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup50
+:spacegroup50 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 50 ;
+              :hasSpaceGroupShortSymbol "Pban"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup51
+:spacegroup51 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 51 ;
+              :hasSpaceGroupShortSymbol "Pmma"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup52
+:spacegroup52 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 52 ;
+              :hasSpaceGroupShortSymbol "Pnna"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup53
+:spacegroup53 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 53 ;
+              :hasSpaceGroupShortSymbol "Pmna"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup54
+:spacegroup54 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 54 ;
+              :hasSpaceGroupShortSymbol "Pcca"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup55
+:spacegroup55 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 55 ;
+              :hasSpaceGroupShortSymbol "Pbam"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup56
+:spacegroup56 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 56 ;
+              :hasSpaceGroupShortSymbol "Pccn"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup57
+:spacegroup57 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 57 ;
+              :hasSpaceGroupShortSymbol "Pbcm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup58
+:spacegroup58 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 58 ;
+              :hasSpaceGroupShortSymbol "Pnnm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup59
+:spacegroup59 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 59 ;
+              :hasSpaceGroupShortSymbol "Pmmn"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup6
+:spacegroup6 rdf:type owl:NamedIndividual ,
+                      :SpaceGroup ;
+             :hasSpaceGroupNumber 6 ;
+             :hasSpaceGroupShortSymbol "Pm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup60
+:spacegroup60 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 60 ;
+              :hasSpaceGroupShortSymbol "Pbcn"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup61
+:spacegroup61 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 61 ;
+              :hasSpaceGroupShortSymbol "Pbca"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup62
+:spacegroup62 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 62 ;
+              :hasSpaceGroupShortSymbol "Pnma"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup63
+:spacegroup63 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 63 ;
+              :hasSpaceGroupShortSymbol "Cmcm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup64
+:spacegroup64 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 64 ;
+              :hasSpaceGroupShortSymbol "Cmce"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup65
+:spacegroup65 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 65 ;
+              :hasSpaceGroupShortSymbol "Cmmm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup66
+:spacegroup66 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 66 ;
+              :hasSpaceGroupShortSymbol "Cccm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup67
+:spacegroup67 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 67 ;
+              :hasSpaceGroupShortSymbol "Cmme"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup68
+:spacegroup68 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 68 ;
+              :hasSpaceGroupShortSymbol "Ccce"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup69
+:spacegroup69 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 69 ;
+              :hasSpaceGroupShortSymbol "Fmmm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup7
+:spacegroup7 rdf:type owl:NamedIndividual ,
+                      :SpaceGroup ;
+             :hasSpaceGroupNumber 7 ;
+             :hasSpaceGroupShortSymbol "Pc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup70
+:spacegroup70 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 70 ;
+              :hasSpaceGroupShortSymbol "Fddd"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup71
+:spacegroup71 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 71 ;
+              :hasSpaceGroupShortSymbol "Immm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup72
+:spacegroup72 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 72 ;
+              :hasSpaceGroupShortSymbol "Ibam"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup73
+:spacegroup73 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 73 ;
+              :hasSpaceGroupShortSymbol "Ibca"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup74
+:spacegroup74 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 74 ;
+              :hasSpaceGroupShortSymbol "Imma"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup75
+:spacegroup75 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 75 ;
+              :hasSpaceGroupShortSymbol "P4"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup76
+:spacegroup76 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 76 ;
+              :hasSpaceGroupShortSymbol "P4_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup77
+:spacegroup77 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 77 ;
+              :hasSpaceGroupShortSymbol "P4_2"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup78
+:spacegroup78 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 78 ;
+              :hasSpaceGroupShortSymbol "P4_3"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup79
+:spacegroup79 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 79 ;
+              :hasSpaceGroupShortSymbol "I4"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup8
+:spacegroup8 rdf:type owl:NamedIndividual ,
+                      :SpaceGroup ;
+             :hasSpaceGroupNumber 8 ;
+             :hasSpaceGroupShortSymbol "Cm"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup80
+:spacegroup80 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 80 ;
+              :hasSpaceGroupShortSymbol "I4_1"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup81
+:spacegroup81 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 81 ;
+              :hasSpaceGroupShortSymbol "P-4"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup82
+:spacegroup82 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 82 ;
+              :hasSpaceGroupShortSymbol "I-4"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup83
+:spacegroup83 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 83 ;
+              :hasSpaceGroupShortSymbol "P4/m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup84
+:spacegroup84 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 84 ;
+              :hasSpaceGroupShortSymbol "P4_2/m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup85
+:spacegroup85 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 85 ;
+              :hasSpaceGroupShortSymbol "P4/n"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup86
+:spacegroup86 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 86 ;
+              :hasSpaceGroupShortSymbol "P4_2/n"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup87
+:spacegroup87 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 87 ;
+              :hasSpaceGroupShortSymbol "I4/m"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup88
+:spacegroup88 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 88 ;
+              :hasSpaceGroupShortSymbol "I4_1/a"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup89
+:spacegroup89 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 89 ;
+              :hasSpaceGroupShortSymbol "P422"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup9
+:spacegroup9 rdf:type owl:NamedIndividual ,
+                      :SpaceGroup ;
+             :hasSpaceGroupNumber 9 ;
+             :hasSpaceGroupShortSymbol "Cc"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup90
+:spacegroup90 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 90 ;
+              :hasSpaceGroupShortSymbol "P42_12"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup91
+:spacegroup91 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 91 ;
+              :hasSpaceGroupShortSymbol "P4_122"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup92
+:spacegroup92 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 92 ;
+              :hasSpaceGroupShortSymbol "P4_12_12"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup93
+:spacegroup93 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 93 ;
+              :hasSpaceGroupShortSymbol "P4_222"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup94
+:spacegroup94 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 94 ;
+              :hasSpaceGroupShortSymbol "P4_22_12"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup95
+:spacegroup95 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 95 ;
+              :hasSpaceGroupShortSymbol "P4_322"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup96
+:spacegroup96 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 96 ;
+              :hasSpaceGroupShortSymbol "P4_32_12"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup97
+:spacegroup97 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 97 ;
+              :hasSpaceGroupShortSymbol "I422"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup98
+:spacegroup98 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 98 ;
+              :hasSpaceGroupShortSymbol "I4_122"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#spacegroup99
+:spacegroup99 rdf:type owl:NamedIndividual ,
+                       :SpaceGroup ;
+              :hasSpaceGroupNumber 99 ;
+              :hasSpaceGroupShortSymbol "P4mm"^^xsd:string .
+
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
