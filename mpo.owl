@@ -11,6 +11,22 @@
                                                               rdfs:label "Materials Properies Ontology" .
 
 #################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#isDerivedFrom
+:isDerivedFrom rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#hasIndexValue
+:hasIndexValue rdf:type owl:DatatypeProperty .
+
+
+#################################################################
 #    Classes
 #################################################################
 
@@ -18,10 +34,324 @@
 <http://emmo.info/emmo/middle/isq#EMMO_1f087811_06cb_42d5_90fb_25d0e7e068ef> rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec> .
 
 
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Acceleration
+:Acceleration rdf:type owl:Class ;
+              rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec> ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty [ owl:inverseOf <http://www.stream-ontology.com/crystalstructure#hasOutput>
+                                               ] ;
+                                owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#TimeDerivation>
+                                                                          [ rdf:type owl:Restriction ;
+                                                                            owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                                                            owl:someValuesFrom :Velocity
+                                                                          ]
+                                                                        ) ;
+                                                     rdf:type owl:Class
+                                                   ]
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_67fc0a36_8dcb_4ffa_9a43_31074efa3296> ;
+                                owl:allValuesFrom [ rdf:type owl:Restriction ;
+                                                    owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_bed1d005_b04e_4a90_94cf_02bc678a8569> ;
+                                                    owl:allValuesFrom :LengthPerSquareTimeDimension
+                                                  ]
+                              ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#AdditionOperation
+:AdditionOperation rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.stream-ontology.com/crystalstructure#MathematicalOperation> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_39c3815d_8cae_4c8f_b2ff_eeba24bec455> ;
+                                     owl:someValuesFrom <http://emmo.info/emmo/top/math#EMMO_8de14a59_660b_454f_aff8_76a07ce185f4>
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                     owl:someValuesFrom :Summand
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasOutput> ;
+                                     owl:someValuesFrom :Sum
+                                   ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#BandEnergy
+:BandEnergy rdf:type owl:Class ;
+            rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_297999d6_c9e4_4262_9536_bd524d1c6e21> ;
+                              owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#kPoint>
+                            ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#BandGap
+:BandGap rdf:type owl:Class ;
+         rdfs:subClassOf :EnergyDifference .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#BandIndex
+:BandIndex rdf:type owl:Class ;
+           rdfs:subClassOf <http://emmo.info/emmo/top/semiotics#EMMO_0cd58641_824c_4851_907f_f4c3be76630c> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#BandStructure
+:BandStructure rdf:type owl:Class ;
+               rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_02c0621e_a527_4790_8a0f_2bb51973c819> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ConductionBand
+:ConductionBand rdf:type owl:Class ;
+                rdfs:subClassOf :EnergyBand .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#DensityOfStates
+:DensityOfStates rdf:type owl:Class ;
+                 rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_02c0621e_a527_4790_8a0f_2bb51973c819> ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                   owl:someValuesFrom :NumberOfStates
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :isDerivedFrom ;
+                                   owl:someValuesFrom :BandStructure
+                                 ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Difference
+:Difference rdf:type owl:Class ;
+            rdfs:subClassOf :MathematicalParticipant .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Dividend
+:Dividend rdf:type owl:Class ;
+          rdfs:subClassOf :MathematicalParticipant ;
+          <http://emmo.info/emmo/top/annotations#EMMO_21ae69b4_235e_479d_8dd8_4f756f694c1b> "Numerator" ;
+          rdfs:label "Dividend" .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#DivisionOperation
+:DivisionOperation rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.stream-ontology.com/crystalstructure#MathematicalOperation> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_39c3815d_8cae_4c8f_b2ff_eeba24bec455> ;
+                                     owl:someValuesFrom <http://emmo.info/emmo/top/math#EMMO_a365b3c1_7bde_41d7_a15b_2820762e85f4>
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                     owl:someValuesFrom :Dividend
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                     owl:someValuesFrom :Divisor
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasOutput> ;
+                                     owl:someValuesFrom :Quotient
+                                   ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Divisor
+:Divisor rdf:type owl:Class ;
+         rdfs:subClassOf :MathematicalParticipant ;
+         <http://emmo.info/emmo/top/annotations#EMMO_21ae69b4_235e_479d_8dd8_4f756f694c1b> "Denominator" ;
+         rdfs:label "Divisor" .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ElectronicBandStructure
+:ElectronicBandStructure rdf:type owl:Class ;
+                         rdfs:subClassOf :BandStructure ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204>
+                                                          ] ;
+                                           owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#ElectronInSolid>
+                                         ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#EnergyBand
+:EnergyBand rdf:type owl:Class ;
+            rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_02c0621e_a527_4790_8a0f_2bb51973c819> ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                              owl:someValuesFrom :BandEnergy
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_297999d6_c9e4_4262_9536_bd524d1c6e21> ;
+                              owl:someValuesFrom :BandIndex
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_297999d6_c9e4_4262_9536_bd524d1c6e21> ;
+                              owl:someValuesFrom :SpinChannel
+                            ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#EnergyDifference
+:EnergyDifference rdf:type owl:Class ;
+                  rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#FermiEnergy
+:FermiEnergy rdf:type owl:Class ;
+             rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#LengthPerSquareTimeDimension
+:LengthPerSquareTimeDimension rdf:type owl:Class .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#MathematicalParticipant
+:MathematicalParticipant rdf:type owl:Class ;
+                         rdfs:subClassOf <http://emmo.info/emmo/middle/holistic#EMMO_49804605_c0fe_4538_abda_f70ba1dc8a5d> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Minuend
+:Minuend rdf:type owl:Class ;
+         rdfs:subClassOf :MathematicalParticipant .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#MultiplicationFactor
+:MultiplicationFactor rdf:type owl:Class ;
+                      rdfs:subClassOf :MathematicalParticipant .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#MultiplicationOperation
+:MultiplicationOperation rdf:type owl:Class ;
+                         rdfs:subClassOf <http://www.stream-ontology.com/crystalstructure#MathematicalOperation> ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_39c3815d_8cae_4c8f_b2ff_eeba24bec455> ;
+                                           owl:someValuesFrom <http://emmo.info/emmo/top/math#EMMO_2b1303e8_d4c3_453b_9918_76f1d009543f>
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasOutput> ;
+                                           owl:someValuesFrom :MultiplicationProduct
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                           owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                           owl:onClass :MultiplicationFactor
+                                         ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#MultiplicationProduct
+:MultiplicationProduct rdf:type owl:Class ;
+                       rdfs:subClassOf :MathematicalParticipant .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#NumberOfStates
+:NumberOfStates rdf:type owl:Class ;
+                rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_02c0621e_a527_4790_8a0f_2bb51973c819> ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_297999d6_c9e4_4262_9536_bd524d1c6e21> ;
+                                  owl:someValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2>
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_297999d6_c9e4_4262_9536_bd524d1c6e21> ;
+                                  owl:someValuesFrom :SpinChannel
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_bed1d005_b04e_4a90_94cf_02bc678a8569> ;
+                                  owl:allValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_3227b821_26a5_4c7c_9c01_5c24483e0bd0>
+                                ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Quotient
+:Quotient rdf:type owl:Class ;
+          rdfs:subClassOf :MathematicalParticipant .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#SpinChannel
+:SpinChannel rdf:type owl:Class ;
+             rdfs:subClassOf <http://emmo.info/emmo/top/semiotics#EMMO_0cd58641_824c_4851_907f_f4c3be76630c> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#SubstractionOperation
+:SubstractionOperation rdf:type owl:Class ;
+                       rdfs:subClassOf <http://www.stream-ontology.com/crystalstructure#MathematicalOperation> ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://emmo.info/emmo/top/semiotics#EMMO_39c3815d_8cae_4c8f_b2ff_eeba24bec455> ;
+                                         owl:someValuesFrom <http://emmo.info/emmo/top/math#EMMO_46d5643b_9706_4b67_8bea_ed77d6026539>
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                         owl:someValuesFrom :Minuend
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                         owl:someValuesFrom :Subtrahend
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasOutput> ;
+                                         owl:someValuesFrom :Difference
+                                       ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Subtrahend
+:Subtrahend rdf:type owl:Class ;
+            rdfs:subClassOf :MathematicalParticipant .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Sum
+:Sum rdf:type owl:Class ;
+     rdfs:subClassOf :MathematicalParticipant .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Summand
+:Summand rdf:type owl:Class ;
+         rdfs:subClassOf :MathematicalParticipant ;
+         <http://emmo.info/emmo/top/annotations#EMMO_21ae69b4_235e_479d_8dd8_4f756f694c1b> "Addend" ;
+         rdfs:label "Summand" .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ValenceBand
+:ValenceBand rdf:type owl:Class ;
+             rdfs:subClassOf :EnergyBand .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Velocity
+:Velocity rdf:type owl:Class ;
+          rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec> ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty [ owl:inverseOf <http://www.stream-ontology.com/crystalstructure#hasOutput>
+                                           ] ;
+                            owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#TimeDerivation>
+                                                                      [ rdf:type owl:Restriction ;
+                                                                        owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                                                        owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#Position>
+                                                                      ]
+                                                                    ) ;
+                                                 rdf:type owl:Class
+                                               ]
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_67fc0a36_8dcb_4ffa_9a43_31074efa3296> ;
+                            owl:allValuesFrom [ rdf:type owl:Restriction ;
+                                                owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_bed1d005_b04e_4a90_94cf_02bc678a8569> ;
+                                                owl:allValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_4f5c7c54_1c63_4d17_b12b_ea0792c2b187>
+                                              ]
+                          ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#VibrationalBandStructure
+:VibrationalBandStructure rdf:type owl:Class ;
+                          rdfs:subClassOf :BandStructure ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204>
+                                                           ] ;
+                                            owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#AtomInSolid>
+                                          ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#kPath
+:kPath rdf:type owl:Class .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#AtomInSolid
 <http://www.stream-ontology.com/crystalstructure#AtomInSolid> rdfs:subClassOf [ rdf:type owl:Restriction ;
                                                                                 owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
                                                                                 owl:someValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_1f087811_06cb_42d5_90fb_25d0e7e068ef>
+                                                                              ] ,
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                                                                owl:someValuesFrom :Velocity
                                                                               ] .
 
 
