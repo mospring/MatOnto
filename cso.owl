@@ -1,4 +1,4 @@
-@prefix : <http://www.stream-ontology.com/crytalstructure#> .
+@prefix : <http://www.stream-ontology.com/crystalstructure#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -80,22 +80,12 @@
 
 ###  http://www.stream-ontology.com/crystalstructure#hasNumberOfAtomSpecies
 :hasNumberOfAtomSpecies rdf:type owl:DatatypeProperty ,
-                                 owl:FunctionalProperty ;
-                        rdfs:domain [ rdf:type owl:Class ;
-                                      owl:unionOf ( <http://emmo.info/emmo/middle/materials#EMMO_3397f270_dfc1_4500_8f6f_4d0d85ac5f71>
-                                                    :CrystalUnitCell
-                                                  )
-                                    ] .
+                                 owl:FunctionalProperty .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#hasNumberOfAtoms
 :hasNumberOfAtoms rdf:type owl:DatatypeProperty ,
-                           owl:FunctionalProperty ;
-                  rdfs:domain [ rdf:type owl:Class ;
-                                owl:unionOf ( <http://emmo.info/emmo/middle/materials#EMMO_3397f270_dfc1_4500_8f6f_4d0d85ac5f71>
-                                              :CrystalUnitCell
-                                            )
-                              ] .
+                           owl:FunctionalProperty .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#hasPointGroupShortSymbol
@@ -132,6 +122,11 @@
                           rdf:type owl:FunctionalProperty ;
                           rdfs:domain :SpaceGroup ;
                           rdfs:range xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#hasSymbol
+:hasSymbol rdf:type owl:DatatypeProperty ;
+           rdfs:range xsd:string .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#hasWyckoffLetter
@@ -320,6 +315,14 @@
 :BravaisLattice rdf:type owl:Class ;
                 rdfs:subClassOf :RealSpaceLattice ,
                                 [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                  owl:someValuesFrom :LatticeCentering
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                  owl:someValuesFrom :LatticeSystem
+                                ] ,
+                                [ rdf:type owl:Restriction ;
                                   owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c>
                                                  ] ;
                                   owl:someValuesFrom :RealSpace
@@ -353,9 +356,18 @@
                          ] .
 
 
+###  http://www.stream-ontology.com/crystalstructure#CrystalFamily
+:CrystalFamily rdf:type owl:Class ;
+               rdfs:subClassOf <http://emmo.info/emmo/middle/properties#EMMO_909415d1_7c43_4d5e_bbeb_7e1910159f66> .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#CrystalPointGroup
 :CrystalPointGroup rdf:type owl:Class ;
-                   rdfs:subClassOf :PointGroup .
+                   rdfs:subClassOf :PointGroup ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                     owl:someValuesFrom :CrystalSystem
+                                   ] .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#CrystalStructure
@@ -380,12 +392,21 @@
                                  ] .
 
 
+###  http://www.stream-ontology.com/crystalstructure#CrystalSystem
+:CrystalSystem rdf:type owl:Class ;
+               rdfs:subClassOf <http://emmo.info/emmo/middle/properties#EMMO_909415d1_7c43_4d5e_bbeb_7e1910159f66> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                 owl:someValuesFrom :CrystalFamily
+                               ] .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#CrystalUnitCell
 :CrystalUnitCell rdf:type owl:Class ;
                  rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_53935db0_af45_4426_b9e9_244a0d77db00> ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c> ;
-                                   owl:someValuesFrom :BravaisLattice
+                                   owl:someValuesFrom :RealSpaceLattice
                                  ] ,
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
@@ -394,6 +415,14 @@
                                  [ rdf:type owl:Restriction ;
                                    owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
                                    owl:someValuesFrom :LatticeVector
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasNumberOfAtomSpecies ;
+                                   owl:someValuesFrom xsd:integer
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasNumberOfAtoms ;
+                                   owl:someValuesFrom xsd:integer
                                  ] .
 
 
@@ -429,6 +458,24 @@
                                           ] ;
                            owl:someValuesFrom <http://emmo.info/emmo/middle/perceptual#EMMO_5f278af9_8593_4e27_a717_ccc9e07a0ddf>
                          ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LatticeCentering
+:LatticeCentering rdf:type owl:Class ;
+                  rdfs:subClassOf <http://emmo.info/emmo/middle/properties#EMMO_909415d1_7c43_4d5e_bbeb_7e1910159f66> ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty <http://emmo.info/emmo/middle/perceptual#EMMO_23b579e1_8088_45b5_9975_064014026c42> ;
+                                    owl:someValuesFrom xsd:string
+                                  ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LatticeSystem
+:LatticeSystem rdf:type owl:Class ;
+               rdfs:subClassOf <http://emmo.info/emmo/middle/properties#EMMO_909415d1_7c43_4d5e_bbeb_7e1910159f66> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                 owl:someValuesFrom :CrystalFamily
+                               ] .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#LatticeVector
@@ -517,6 +564,14 @@
 ###  http://www.stream-ontology.com/crystalstructure#SpaceGroup
 :SpaceGroup rdf:type owl:Class ;
             rdfs:subClassOf :Symmetry ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                              owl:someValuesFrom :CrystalSystem
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                              owl:someValuesFrom :LatticeSystem
+                            ] ,
                             [ rdf:type owl:Restriction ;
                               owl:onProperty <http://emmo.info/emmo/top/mereotopology#EMMO_17e27c22_37e1_468c_9dd7_95e137f73e7f> ;
                               owl:someValuesFrom :WyckoffPosition
@@ -1159,9 +1214,263 @@
                                                                       <http://www.daml.org/2003/01/periodictable/PeriodicTable#Element> .
 
 
+###  http://www.stream-ontology.com/crystalstructure#BLaP
+:BLaP rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCprimitive ,
+                                                                                          :LStriclinic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLcF
+:BLcF rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCface ,
+                                                                                          :LScubic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLcI
+:BLcI rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCbody ,
+                                                                                          :LScubic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLcP
+:BLcP rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCprimitive ,
+                                                                                          :LScubic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLhP
+:BLhP rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCprimitive ,
+                                                                                          :LShexagonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLhR
+:BLhR rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      owl:sameAs :BLrP ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCrhombohedral ,
+                                                                                          :LShexagonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLmP
+:BLmP rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCprimitive ,
+                                                                                          :LSmonoclinic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLmS
+:BLmS rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCbase ,
+                                                                                          :LSmonoclinic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLoF
+:BLoF rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCface ,
+                                                                                          :LSorthorhombic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLoI
+:BLoI rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCbody ,
+                                                                                          :LSorthorhombic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLoP
+:BLoP rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCprimitive ,
+                                                                                          :LSorthorhombic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLoS
+:BLoS rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCbase ,
+                                                                                          :LSorthorhombic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLrP
+:BLrP rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCprimitive ,
+                                                                                          :LSrhombohedral .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLtI
+:BLtI rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCbody ,
+                                                                                          :LStetragonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#BLtP
+:BLtP rdf:type owl:NamedIndividual ,
+               :BravaisLattice ;
+      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :LCprimitive ,
+                                                                                          :LStetragonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CFcubic
+:CFcubic rdf:type owl:NamedIndividual ,
+                  :CrystalFamily .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CFhexagonal
+:CFhexagonal rdf:type owl:NamedIndividual ,
+                      :CrystalFamily .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CFmonoclinic
+:CFmonoclinic rdf:type owl:NamedIndividual ,
+                       :CrystalFamily .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CForthorhombic
+:CForthorhombic rdf:type owl:NamedIndividual ,
+                         :CrystalFamily .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CFtetragonal
+:CFtetragonal rdf:type owl:NamedIndividual ,
+                       :CrystalFamily .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CFtriclinic
+:CFtriclinic rdf:type owl:NamedIndividual ,
+                      :CrystalFamily .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CScubic
+:CScubic rdf:type owl:NamedIndividual ,
+                  :CrystalSystem ;
+         <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFcubic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CShexagonal
+:CShexagonal rdf:type owl:NamedIndividual ,
+                      :CrystalSystem ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFhexagonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CSmonoclinic
+:CSmonoclinic rdf:type owl:NamedIndividual ,
+                       :CrystalSystem ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFmonoclinic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CSorthorhombic
+:CSorthorhombic rdf:type owl:NamedIndividual ,
+                         :CrystalSystem ;
+                <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CForthorhombic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CStetragonal
+:CStetragonal rdf:type owl:NamedIndividual ,
+                       :CrystalSystem ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFtetragonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CStriclinic
+:CStriclinic rdf:type owl:NamedIndividual ,
+                      :CrystalSystem ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFtriclinic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CStrigonal
+:CStrigonal rdf:type owl:NamedIndividual ,
+                     :CrystalSystem ;
+            <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFhexagonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LCbase
+:LCbase rdf:type owl:NamedIndividual ,
+                 :LatticeCentering ;
+        :hasSymbol "A"^^xsd:string ,
+                   "B"^^xsd:string ,
+                   "C"^^xsd:string ,
+                   "S"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LCbody
+:LCbody rdf:type owl:NamedIndividual ,
+                 :LatticeCentering ;
+        :hasSymbol "I"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LCface
+:LCface rdf:type owl:NamedIndividual ,
+                 :LatticeCentering ;
+        :hasSymbol "F"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LCprimitive
+:LCprimitive rdf:type owl:NamedIndividual ,
+                      :LatticeCentering ;
+             :hasSymbol "P"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LCrhombohedral
+:LCrhombohedral rdf:type owl:NamedIndividual ,
+                         :LatticeCentering ;
+                :hasSymbol "R"^^xsd:string .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LScubic
+:LScubic rdf:type owl:NamedIndividual ,
+                  :LatticeSystem ;
+         <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFcubic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LShexagonal
+:LShexagonal rdf:type owl:NamedIndividual ,
+                      :LatticeSystem ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFhexagonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LSmonoclinic
+:LSmonoclinic rdf:type owl:NamedIndividual ,
+                       :LatticeSystem ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFmonoclinic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LSorthorhombic
+:LSorthorhombic rdf:type owl:NamedIndividual ,
+                         :LatticeSystem ;
+                <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CForthorhombic .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LSrhombohedral
+:LSrhombohedral rdf:type owl:NamedIndividual ,
+                         :LatticeSystem ;
+                <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFhexagonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LStetragonal
+:LStetragonal rdf:type owl:NamedIndividual ,
+                       :LatticeSystem ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFtetragonal .
+
+
+###  http://www.stream-ontology.com/crystalstructure#LStriclinic
+:LStriclinic rdf:type owl:NamedIndividual ,
+                      :LatticeSystem ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CFtriclinic .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC1
 :crystalpointgroupC1 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStriclinic ;
                      :hasPointGroupShortSymbol "1"^^xsd:string ;
                      :hasSchoenflies "C1"^^xsd:string .
 
@@ -1169,6 +1478,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC2
 :crystalpointgroupC2 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ;
                      :hasPointGroupShortSymbol "2"^^xsd:string ;
                      :hasSchoenflies "C2"^^xsd:string .
 
@@ -1176,6 +1486,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC2h
 :crystalpointgroupC2h rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ;
                       :hasPointGroupShortSymbol "2/m"^^xsd:string ;
                       :hasSchoenflies "C2h"^^xsd:string .
 
@@ -1183,6 +1494,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC2v
 :crystalpointgroupC2v rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ;
                       :hasPointGroupShortSymbol "mm2"^^xsd:string ;
                       :hasSchoenflies "C2v"^^xsd:string .
 
@@ -1190,6 +1502,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC3
 :crystalpointgroupC3 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ;
                      :hasPointGroupShortSymbol "3"^^xsd:string ;
                      :hasSchoenflies "C3"^^xsd:string .
 
@@ -1197,6 +1510,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC3h
 :crystalpointgroupC3h rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ;
                       :hasPointGroupShortSymbol "-6"^^xsd:string ;
                       :hasSchoenflies "C3h"^^xsd:string .
 
@@ -1204,6 +1518,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC3i
 :crystalpointgroupC3i rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ;
                       :hasPointGroupShortSymbol "-3"^^xsd:string ;
                       :hasSchoenflies "C3i"^^xsd:string .
 
@@ -1211,6 +1526,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC3v
 :crystalpointgroupC3v rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ;
                       :hasPointGroupShortSymbol "3m"^^xsd:string ;
                       :hasSchoenflies "C3v"^^xsd:string .
 
@@ -1218,6 +1534,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC4
 :crystalpointgroupC4 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ;
                      :hasPointGroupShortSymbol "4"^^xsd:string ;
                      :hasSchoenflies "C4"^^xsd:string .
 
@@ -1225,6 +1542,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC4h
 :crystalpointgroupC4h rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ;
                       :hasPointGroupShortSymbol "4/m"^^xsd:string ;
                       :hasSchoenflies "C4h"^^xsd:string .
 
@@ -1232,6 +1550,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC4v
 :crystalpointgroupC4v rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ;
                       :hasPointGroupShortSymbol "4mm"^^xsd:string ;
                       :hasSchoenflies "C4v"^^xsd:string .
 
@@ -1239,6 +1558,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC6
 :crystalpointgroupC6 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ;
                      :hasPointGroupShortSymbol "6"^^xsd:string ;
                      :hasSchoenflies "C6"^^xsd:string .
 
@@ -1246,6 +1566,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC6h
 :crystalpointgroupC6h rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ;
                       :hasPointGroupShortSymbol "6/m"^^xsd:string ;
                       :hasSchoenflies "C6h"^^xsd:string .
 
@@ -1253,6 +1574,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupC6v
 :crystalpointgroupC6v rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ;
                       :hasPointGroupShortSymbol "6mm"^^xsd:string ;
                       :hasSchoenflies "C6v"^^xsd:string .
 
@@ -1260,6 +1582,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupCi
 :crystalpointgroupCi rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStriclinic ;
                      :hasPointGroupShortSymbol "-1"^^xsd:string ;
                      :hasSchoenflies "Ci"^^xsd:string .
 
@@ -1267,6 +1590,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupCs
 :crystalpointgroupCs rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ;
                      :hasPointGroupShortSymbol "m"^^xsd:string ;
                      :hasSchoenflies "Cs"^^xsd:string .
 
@@ -1274,6 +1598,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD2
 :crystalpointgroupD2 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ;
                      :hasPointGroupShortSymbol "222"^^xsd:string ;
                      :hasSchoenflies "D2"^^xsd:string .
 
@@ -1281,6 +1606,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD2d
 :crystalpointgroupD2d rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ;
                       :hasPointGroupShortSymbol "-42m"^^xsd:string ;
                       :hasSchoenflies "D2d"^^xsd:string .
 
@@ -1288,6 +1614,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD2h
 :crystalpointgroupD2h rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ;
                       :hasPointGroupShortSymbol "mmm"^^xsd:string ;
                       :hasSchoenflies "D2h"^^xsd:string .
 
@@ -1295,6 +1622,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD3
 :crystalpointgroupD3 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ;
                      :hasPointGroupShortSymbol "32"^^xsd:string ;
                      :hasSchoenflies "D3"^^xsd:string .
 
@@ -1302,6 +1630,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD3d
 :crystalpointgroupD3d rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ;
                       :hasPointGroupShortSymbol "-3m"^^xsd:string ;
                       :hasSchoenflies "D3d"^^xsd:string .
 
@@ -1309,6 +1638,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD3h
 :crystalpointgroupD3h rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ;
                       :hasPointGroupShortSymbol "62m"^^xsd:string ;
                       :hasSchoenflies "D3h"^^xsd:string .
 
@@ -1316,6 +1646,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD4
 :crystalpointgroupD4 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ;
                      :hasPointGroupShortSymbol "422"^^xsd:string ;
                      :hasSchoenflies "D4"^^xsd:string .
 
@@ -1323,6 +1654,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD4h
 :crystalpointgroupD4h rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ;
                       :hasPointGroupShortSymbol "4/mmm"^^xsd:string ;
                       :hasSchoenflies "D4h"^^xsd:string .
 
@@ -1330,6 +1662,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD6
 :crystalpointgroupD6 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ;
                      :hasPointGroupShortSymbol "622"^^xsd:string ;
                      :hasSchoenflies "D6"^^xsd:string .
 
@@ -1337,6 +1670,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupD6h
 :crystalpointgroupD6h rdf:type owl:NamedIndividual ,
                                :CrystalPointGroup ;
+                      <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ;
                       :hasPointGroupShortSymbol "6/mmm"^^xsd:string ;
                       :hasSchoenflies "D6h"^^xsd:string .
 
@@ -1344,6 +1678,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupO
 :crystalpointgroupO rdf:type owl:NamedIndividual ,
                              :CrystalPointGroup ;
+                    <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ;
                     :hasPointGroupShortSymbol "432"^^xsd:string ;
                     :hasSchoenflies "O"^^xsd:string .
 
@@ -1351,6 +1686,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupOh
 :crystalpointgroupOh rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ;
                      :hasPointGroupShortSymbol "m-3m"^^xsd:string ;
                      :hasSchoenflies "Oh"^^xsd:string .
 
@@ -1358,6 +1694,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupS4
 :crystalpointgroupS4 rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ;
                      :hasPointGroupShortSymbol "-4"^^xsd:string ;
                      :hasSchoenflies "S4"^^xsd:string .
 
@@ -1365,6 +1702,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupT
 :crystalpointgroupT rdf:type owl:NamedIndividual ,
                              :CrystalPointGroup ;
+                    <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ;
                     :hasPointGroupShortSymbol "23"^^xsd:string ;
                     :hasSchoenflies "T"^^xsd:string .
 
@@ -1372,6 +1710,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupTd
 :crystalpointgroupTd rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ;
                      :hasPointGroupShortSymbol "-43m"^^xsd:string ;
                      :hasSchoenflies "Td"^^xsd:string .
 
@@ -1379,6 +1718,7 @@
 ###  http://www.stream-ontology.com/crystalstructure#crystalpointgroupTh
 :crystalpointgroupTh rdf:type owl:NamedIndividual ,
                               :CrystalPointGroup ;
+                     <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ;
                      :hasPointGroupShortSymbol "m-3"^^xsd:string ;
                      :hasSchoenflies "Th"^^xsd:string .
 
@@ -1386,6 +1726,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup1
 :spacegroup1 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStriclinic ,
+                                                                                                 :LStriclinic ;
              :hasSpaceGroupNumber 1 ;
              :hasSpaceGroupShortSymbol "P1"^^xsd:string .
 
@@ -1393,6 +1735,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup10
 :spacegroup10 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                  :LSmonoclinic ;
               :hasSpaceGroupNumber 10 ;
               :hasSpaceGroupShortSymbol "P2/m"^^xsd:string .
 
@@ -1400,6 +1744,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup100
 :spacegroup100 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 100 ;
                :hasSpaceGroupShortSymbol "P4bm"^^xsd:string .
 
@@ -1407,6 +1753,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup101
 :spacegroup101 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 101 ;
                :hasSpaceGroupShortSymbol "P4_2cm"^^xsd:string .
 
@@ -1414,6 +1762,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup102
 :spacegroup102 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 102 ;
                :hasSpaceGroupShortSymbol "P4_2nm"^^xsd:string .
 
@@ -1421,6 +1771,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup103
 :spacegroup103 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 103 ;
                :hasSpaceGroupShortSymbol "P4cc"^^xsd:string .
 
@@ -1428,6 +1780,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup104
 :spacegroup104 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 104 ;
                :hasSpaceGroupShortSymbol "P4nc"^^xsd:string .
 
@@ -1435,6 +1789,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup105
 :spacegroup105 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 105 ;
                :hasSpaceGroupShortSymbol "P4_2mc"^^xsd:string .
 
@@ -1442,6 +1798,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup106
 :spacegroup106 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 106 ;
                :hasSpaceGroupShortSymbol "P4_2bc"^^xsd:string .
 
@@ -1449,6 +1807,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup107
 :spacegroup107 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 107 ;
                :hasSpaceGroupShortSymbol "I4mm"^^xsd:string .
 
@@ -1456,6 +1816,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup108
 :spacegroup108 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 108 ;
                :hasSpaceGroupShortSymbol "I4cm"^^xsd:string .
 
@@ -1463,6 +1825,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup109
 :spacegroup109 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 109 ;
                :hasSpaceGroupShortSymbol "I4_1md"^^xsd:string .
 
@@ -1470,6 +1834,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup11
 :spacegroup11 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                  :LSmonoclinic ;
               :hasSpaceGroupNumber 11 ;
               :hasSpaceGroupShortSymbol "P2_1/m"^^xsd:string .
 
@@ -1477,6 +1843,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup110
 :spacegroup110 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 110 ;
                :hasSpaceGroupShortSymbol "I4_1cd"^^xsd:string .
 
@@ -1484,6 +1852,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup111
 :spacegroup111 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 111 ;
                :hasSpaceGroupShortSymbol "P-42m"^^xsd:string .
 
@@ -1491,6 +1861,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup112
 :spacegroup112 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 112 ;
                :hasSpaceGroupShortSymbol "P-42c"^^xsd:string .
 
@@ -1498,6 +1870,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup113
 :spacegroup113 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 113 ;
                :hasSpaceGroupShortSymbol "P-42_1m"^^xsd:string .
 
@@ -1505,6 +1879,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup114
 :spacegroup114 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 114 ;
                :hasSpaceGroupShortSymbol "P-42_1c"^^xsd:string .
 
@@ -1512,6 +1888,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup115
 :spacegroup115 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 115 ;
                :hasSpaceGroupShortSymbol "P-4m2"^^xsd:string .
 
@@ -1519,6 +1897,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup116
 :spacegroup116 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 116 ;
                :hasSpaceGroupShortSymbol "P-4c2"^^xsd:string .
 
@@ -1526,6 +1906,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup117
 :spacegroup117 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 117 ;
                :hasSpaceGroupShortSymbol "P-4b2"^^xsd:string .
 
@@ -1533,6 +1915,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup118
 :spacegroup118 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 118 ;
                :hasSpaceGroupShortSymbol "P-4n2"^^xsd:string .
 
@@ -1540,6 +1924,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup119
 :spacegroup119 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 119 ;
                :hasSpaceGroupShortSymbol "I-4m2"^^xsd:string .
 
@@ -1547,6 +1933,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup12
 :spacegroup12 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                  :LSmonoclinic ;
               :hasSpaceGroupNumber 12 ;
               :hasSpaceGroupShortSymbol "C2/m"^^xsd:string .
 
@@ -1554,6 +1942,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup120
 :spacegroup120 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 120 ;
                :hasSpaceGroupShortSymbol "I-4c2"^^xsd:string .
 
@@ -1561,6 +1951,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup121
 :spacegroup121 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 121 ;
                :hasSpaceGroupShortSymbol "I-42m"^^xsd:string .
 
@@ -1568,6 +1960,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup122
 :spacegroup122 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 122 ;
                :hasSpaceGroupShortSymbol "I-42d"^^xsd:string .
 
@@ -1575,6 +1969,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup123
 :spacegroup123 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 123 ;
                :hasSpaceGroupShortSymbol "P4/mmm"^^xsd:string .
 
@@ -1582,6 +1978,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup124
 :spacegroup124 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 124 ;
                :hasSpaceGroupShortSymbol "P4/mcc"^^xsd:string .
 
@@ -1589,6 +1987,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup125
 :spacegroup125 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 125 ;
                :hasSpaceGroupShortSymbol "P4/nbm"^^xsd:string .
 
@@ -1596,6 +1996,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup126
 :spacegroup126 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 126 ;
                :hasSpaceGroupShortSymbol "P4/nnc"^^xsd:string .
 
@@ -1603,6 +2005,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup127
 :spacegroup127 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 127 ;
                :hasSpaceGroupShortSymbol "P4/mbm"^^xsd:string .
 
@@ -1610,6 +2014,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup128
 :spacegroup128 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 128 ;
                :hasSpaceGroupShortSymbol "P4/mnc"^^xsd:string .
 
@@ -1617,6 +2023,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup129
 :spacegroup129 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 129 ;
                :hasSpaceGroupShortSymbol "P4/nmm"^^xsd:string .
 
@@ -1624,6 +2032,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup13
 :spacegroup13 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                  :LSmonoclinic ;
               :hasSpaceGroupNumber 13 ;
               :hasSpaceGroupShortSymbol "P2/c"^^xsd:string .
 
@@ -1631,6 +2041,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup130
 :spacegroup130 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 130 ;
                :hasSpaceGroupShortSymbol "P4/ncc"^^xsd:string .
 
@@ -1638,6 +2050,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup131
 :spacegroup131 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 131 ;
                :hasSpaceGroupShortSymbol "P4_2/mmc"^^xsd:string .
 
@@ -1645,6 +2059,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup132
 :spacegroup132 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 132 ;
                :hasSpaceGroupShortSymbol "P4_2/mcm"^^xsd:string .
 
@@ -1652,6 +2068,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup133
 :spacegroup133 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 133 ;
                :hasSpaceGroupShortSymbol "P4_2/nbc"^^xsd:string .
 
@@ -1659,6 +2077,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup134
 :spacegroup134 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 134 ;
                :hasSpaceGroupShortSymbol "P4_2/nnm"^^xsd:string .
 
@@ -1666,6 +2086,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup135
 :spacegroup135 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 135 ;
                :hasSpaceGroupShortSymbol "P4_2/mbc"^^xsd:string .
 
@@ -1673,6 +2095,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup136
 :spacegroup136 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 136 ;
                :hasSpaceGroupShortSymbol "P4_2/mnm"^^xsd:string .
 
@@ -1680,6 +2104,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup137
 :spacegroup137 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 137 ;
                :hasSpaceGroupShortSymbol "P4_2/nmc"^^xsd:string .
 
@@ -1687,6 +2113,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup138
 :spacegroup138 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 138 ;
                :hasSpaceGroupShortSymbol "P4_2/ncm"^^xsd:string .
 
@@ -1694,6 +2122,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup139
 :spacegroup139 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 139 ;
                :hasSpaceGroupShortSymbol "I4/mmm"^^xsd:string .
 
@@ -1701,6 +2131,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup14
 :spacegroup14 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                  :LSmonoclinic ;
               :hasSpaceGroupNumber 14 ;
               :hasSpaceGroupShortSymbol "P2_1/c"^^xsd:string .
 
@@ -1708,6 +2140,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup140
 :spacegroup140 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 140 ;
                :hasSpaceGroupShortSymbol "I4/mcm"^^xsd:string .
 
@@ -1715,6 +2149,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup141
 :spacegroup141 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 141 ;
                :hasSpaceGroupShortSymbol "I4_1/amd"^^xsd:string .
 
@@ -1722,6 +2158,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup142
 :spacegroup142 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                   :LStetragonal ;
                :hasSpaceGroupNumber 142 ;
                :hasSpaceGroupShortSymbol "I4_1/acd"^^xsd:string .
 
@@ -1729,6 +2167,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup143
 :spacegroup143 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 143 ;
                :hasSpaceGroupShortSymbol "P3"^^xsd:string .
 
@@ -1736,6 +2177,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup144
 :spacegroup144 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 144 ;
                :hasSpaceGroupShortSymbol "P3_1"^^xsd:string .
 
@@ -1743,6 +2187,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup145
 :spacegroup145 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 145 ;
                :hasSpaceGroupShortSymbol "P3_2"^^xsd:string .
 
@@ -1750,6 +2197,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup146
 :spacegroup146 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 146 ;
                :hasSpaceGroupShortSymbol "R3"^^xsd:string .
 
@@ -1757,6 +2207,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup147
 :spacegroup147 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 147 ;
                :hasSpaceGroupShortSymbol "P-3"^^xsd:string .
 
@@ -1764,6 +2217,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup148
 :spacegroup148 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 148 ;
                :hasSpaceGroupShortSymbol "R-3"^^xsd:string .
 
@@ -1771,6 +2227,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup149
 :spacegroup149 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 149 ;
                :hasSpaceGroupShortSymbol "P312"^^xsd:string .
 
@@ -1778,6 +2237,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup15
 :spacegroup15 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                  :LSmonoclinic ;
               :hasSpaceGroupNumber 15 ;
               :hasSpaceGroupShortSymbol "C2/c"^^xsd:string .
 
@@ -1785,6 +2246,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup150
 :spacegroup150 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 150 ;
                :hasSpaceGroupShortSymbol "P321"^^xsd:string .
 
@@ -1792,6 +2256,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup151
 :spacegroup151 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 151 ;
                :hasSpaceGroupShortSymbol "P3_112"^^xsd:string .
 
@@ -1799,6 +2266,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup152
 :spacegroup152 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 152 ;
                :hasSpaceGroupShortSymbol "P3_121"^^xsd:string .
 
@@ -1806,6 +2276,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup153
 :spacegroup153 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 153 ;
                :hasSpaceGroupShortSymbol "P3_212"^^xsd:string .
 
@@ -1813,6 +2286,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup154
 :spacegroup154 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 154 ;
                :hasSpaceGroupShortSymbol "P3_221"^^xsd:string .
 
@@ -1820,6 +2296,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup155
 :spacegroup155 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 155 ;
                :hasSpaceGroupShortSymbol "R32"^^xsd:string .
 
@@ -1827,6 +2306,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup156
 :spacegroup156 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 156 ;
                :hasSpaceGroupShortSymbol "P3m1"^^xsd:string .
 
@@ -1834,6 +2316,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup157
 :spacegroup157 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 157 ;
                :hasSpaceGroupShortSymbol "P31m"^^xsd:string .
 
@@ -1841,6 +2326,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup158
 :spacegroup158 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 158 ;
                :hasSpaceGroupShortSymbol "P3c1"^^xsd:string .
 
@@ -1848,6 +2336,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup159
 :spacegroup159 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 159 ;
                :hasSpaceGroupShortSymbol "P31c"^^xsd:string .
 
@@ -1855,6 +2346,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup16
 :spacegroup16 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 16 ;
               :hasSpaceGroupShortSymbol "P222"^^xsd:string .
 
@@ -1862,6 +2355,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup160
 :spacegroup160 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 160 ;
                :hasSpaceGroupShortSymbol "R3m"^^xsd:string .
 
@@ -1869,6 +2365,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup161
 :spacegroup161 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 161 ;
                :hasSpaceGroupShortSymbol "R3c"^^xsd:string .
 
@@ -1876,6 +2375,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup162
 :spacegroup162 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 162 ;
                :hasSpaceGroupShortSymbol "P-31m"^^xsd:string .
 
@@ -1883,6 +2385,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup163
 :spacegroup163 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 163 ;
                :hasSpaceGroupShortSymbol "P-31c"^^xsd:string .
 
@@ -1890,6 +2395,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup164
 :spacegroup164 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 164 ;
                :hasSpaceGroupShortSymbol "P-3m1"^^xsd:string .
 
@@ -1897,6 +2405,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup165
 :spacegroup165 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 165 ;
                :hasSpaceGroupShortSymbol "P-3c1"^^xsd:string .
 
@@ -1904,6 +2415,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup166
 :spacegroup166 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 166 ;
                :hasSpaceGroupShortSymbol "R-3m"^^xsd:string .
 
@@ -1911,6 +2425,9 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup167
 :spacegroup167 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStrigonal ,
+                                                                                                   :LShexagonal ,
+                                                                                                   :LSrhombohedral ;
                :hasSpaceGroupNumber 167 ;
                :hasSpaceGroupShortSymbol "R-3c"^^xsd:string .
 
@@ -1918,6 +2435,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup168
 :spacegroup168 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 168 ;
                :hasSpaceGroupShortSymbol "P6"^^xsd:string .
 
@@ -1925,6 +2444,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup169
 :spacegroup169 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 169 ;
                :hasSpaceGroupShortSymbol "P6_1"^^xsd:string .
 
@@ -1932,6 +2453,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup17
 :spacegroup17 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 17 ;
               :hasSpaceGroupShortSymbol "P222_1"^^xsd:string .
 
@@ -1939,6 +2462,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup170
 :spacegroup170 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 170 ;
                :hasSpaceGroupShortSymbol "P6_5"^^xsd:string .
 
@@ -1946,6 +2471,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup171
 :spacegroup171 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 171 ;
                :hasSpaceGroupShortSymbol "P6_2"^^xsd:string .
 
@@ -1953,6 +2480,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup172
 :spacegroup172 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 172 ;
                :hasSpaceGroupShortSymbol "P6_4"^^xsd:string .
 
@@ -1960,6 +2489,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup173
 :spacegroup173 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 173 ;
                :hasSpaceGroupShortSymbol "P6_3"^^xsd:string .
 
@@ -1967,6 +2498,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup174
 :spacegroup174 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 174 ;
                :hasSpaceGroupShortSymbol "P-6"^^xsd:string .
 
@@ -1974,6 +2507,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup175
 :spacegroup175 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 175 ;
                :hasSpaceGroupShortSymbol "P6/m"^^xsd:string .
 
@@ -1981,6 +2516,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup176
 :spacegroup176 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 176 ;
                :hasSpaceGroupShortSymbol "P6_3/m"^^xsd:string .
 
@@ -1988,6 +2525,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup177
 :spacegroup177 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 177 ;
                :hasSpaceGroupShortSymbol "P622"^^xsd:string .
 
@@ -1995,6 +2534,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup178
 :spacegroup178 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 178 ;
                :hasSpaceGroupShortSymbol "P6_122"^^xsd:string .
 
@@ -2002,6 +2543,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup179
 :spacegroup179 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 179 ;
                :hasSpaceGroupShortSymbol "P6_522"^^xsd:string .
 
@@ -2009,6 +2552,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup18
 :spacegroup18 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 18 ;
               :hasSpaceGroupShortSymbol "P2_12_12"^^xsd:string .
 
@@ -2016,6 +2561,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup180
 :spacegroup180 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 180 ;
                :hasSpaceGroupShortSymbol "P6_222"^^xsd:string .
 
@@ -2023,6 +2570,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup181
 :spacegroup181 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 181 ;
                :hasSpaceGroupShortSymbol "P6_422"^^xsd:string .
 
@@ -2030,6 +2579,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup182
 :spacegroup182 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 182 ;
                :hasSpaceGroupShortSymbol "P6_322"^^xsd:string .
 
@@ -2037,6 +2588,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup183
 :spacegroup183 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 183 ;
                :hasSpaceGroupShortSymbol "P6mm"^^xsd:string .
 
@@ -2044,6 +2597,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup184
 :spacegroup184 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 184 ;
                :hasSpaceGroupShortSymbol "P6cc"^^xsd:string .
 
@@ -2051,6 +2606,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup185
 :spacegroup185 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 185 ;
                :hasSpaceGroupShortSymbol "P6_3cm"^^xsd:string .
 
@@ -2058,6 +2615,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup186
 :spacegroup186 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 186 ;
                :hasSpaceGroupShortSymbol "P6_3mc"^^xsd:string .
 
@@ -2065,6 +2624,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup187
 :spacegroup187 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 187 ;
                :hasSpaceGroupShortSymbol "P-6m2"^^xsd:string .
 
@@ -2072,6 +2633,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup188
 :spacegroup188 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 188 ;
                :hasSpaceGroupShortSymbol "P-6c2"^^xsd:string .
 
@@ -2079,6 +2642,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup189
 :spacegroup189 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 189 ;
                :hasSpaceGroupShortSymbol "P-62m"^^xsd:string .
 
@@ -2086,6 +2651,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup19
 :spacegroup19 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 19 ;
               :hasSpaceGroupShortSymbol "P2_12_12_1"^^xsd:string .
 
@@ -2093,6 +2660,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup190
 :spacegroup190 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 190 ;
                :hasSpaceGroupShortSymbol "P-62c"^^xsd:string .
 
@@ -2100,6 +2669,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup191
 :spacegroup191 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 191 ;
                :hasSpaceGroupShortSymbol "P6/mmm"^^xsd:string .
 
@@ -2107,6 +2678,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup192
 :spacegroup192 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 192 ;
                :hasSpaceGroupShortSymbol "P6/mcc"^^xsd:string .
 
@@ -2114,6 +2687,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup193
 :spacegroup193 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 193 ;
                :hasSpaceGroupShortSymbol "P6_3/mcm"^^xsd:string .
 
@@ -2121,6 +2696,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup194
 :spacegroup194 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CShexagonal ,
+                                                                                                   :LShexagonal ;
                :hasSpaceGroupNumber 194 ;
                :hasSpaceGroupShortSymbol "P6_3/mmc"^^xsd:string .
 
@@ -2128,6 +2705,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup195
 :spacegroup195 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 195 ;
                :hasSpaceGroupShortSymbol "P23"^^xsd:string .
 
@@ -2135,6 +2714,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup196
 :spacegroup196 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 196 ;
                :hasSpaceGroupShortSymbol "F23"^^xsd:string .
 
@@ -2142,6 +2723,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup197
 :spacegroup197 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 197 ;
                :hasSpaceGroupShortSymbol "I23"^^xsd:string .
 
@@ -2149,6 +2732,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup198
 :spacegroup198 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 198 ;
                :hasSpaceGroupShortSymbol "P2_13"^^xsd:string .
 
@@ -2156,6 +2741,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup199
 :spacegroup199 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 199 ;
                :hasSpaceGroupShortSymbol "I2_13"^^xsd:string .
 
@@ -2163,6 +2750,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup2
 :spacegroup2 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStriclinic ,
+                                                                                                 :LStriclinic ;
              :hasSpaceGroupNumber 2 ;
              :hasSpaceGroupShortSymbol "P-1"^^xsd:string .
 
@@ -2170,6 +2759,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup20
 :spacegroup20 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 20 ;
               :hasSpaceGroupShortSymbol "C222_1"^^xsd:string .
 
@@ -2177,6 +2768,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup200
 :spacegroup200 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 200 ;
                :hasSpaceGroupShortSymbol "Pm-3"^^xsd:string .
 
@@ -2184,6 +2777,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup201
 :spacegroup201 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 201 ;
                :hasSpaceGroupShortSymbol "Pn-3"^^xsd:string .
 
@@ -2191,6 +2786,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup202
 :spacegroup202 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 202 ;
                :hasSpaceGroupShortSymbol "Fm-3"^^xsd:string .
 
@@ -2198,6 +2795,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup203
 :spacegroup203 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 203 ;
                :hasSpaceGroupShortSymbol "Fd-3"^^xsd:string .
 
@@ -2205,6 +2804,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup204
 :spacegroup204 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 204 ;
                :hasSpaceGroupShortSymbol "Im-3"^^xsd:string .
 
@@ -2212,6 +2813,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup205
 :spacegroup205 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 205 ;
                :hasSpaceGroupShortSymbol "Pa-3"^^xsd:string .
 
@@ -2219,6 +2822,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup206
 :spacegroup206 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 206 ;
                :hasSpaceGroupShortSymbol "Ia-3"^^xsd:string .
 
@@ -2226,6 +2831,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup207
 :spacegroup207 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 207 ;
                :hasSpaceGroupShortSymbol "P432"^^xsd:string .
 
@@ -2233,6 +2840,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup208
 :spacegroup208 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 208 ;
                :hasSpaceGroupShortSymbol "P4_232"^^xsd:string .
 
@@ -2240,6 +2849,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup209
 :spacegroup209 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 209 ;
                :hasSpaceGroupShortSymbol "F432"^^xsd:string .
 
@@ -2247,6 +2858,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup21
 :spacegroup21 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 21 ;
               :hasSpaceGroupShortSymbol "C222"^^xsd:string .
 
@@ -2254,6 +2867,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup210
 :spacegroup210 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 210 ;
                :hasSpaceGroupShortSymbol "F4_132"^^xsd:string .
 
@@ -2261,6 +2876,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup211
 :spacegroup211 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 211 ;
                :hasSpaceGroupShortSymbol "I432"^^xsd:string .
 
@@ -2268,6 +2885,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup212
 :spacegroup212 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 212 ;
                :hasSpaceGroupShortSymbol "P4_332"^^xsd:string .
 
@@ -2275,6 +2894,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup213
 :spacegroup213 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 213 ;
                :hasSpaceGroupShortSymbol "P4_132"^^xsd:string .
 
@@ -2282,6 +2903,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup214
 :spacegroup214 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 214 ;
                :hasSpaceGroupShortSymbol "I4_132"^^xsd:string .
 
@@ -2289,6 +2912,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup215
 :spacegroup215 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 215 ;
                :hasSpaceGroupShortSymbol "P-43m"^^xsd:string .
 
@@ -2296,6 +2921,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup216
 :spacegroup216 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 216 ;
                :hasSpaceGroupShortSymbol "F-43m"^^xsd:string .
 
@@ -2303,6 +2930,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup217
 :spacegroup217 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 217 ;
                :hasSpaceGroupShortSymbol "I-43m"^^xsd:string .
 
@@ -2310,6 +2939,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup218
 :spacegroup218 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 218 ;
                :hasSpaceGroupShortSymbol "P-43n"^^xsd:string .
 
@@ -2317,6 +2948,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup219
 :spacegroup219 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 219 ;
                :hasSpaceGroupShortSymbol "F-43c"^^xsd:string .
 
@@ -2324,6 +2957,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup22
 :spacegroup22 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 22 ;
               :hasSpaceGroupShortSymbol "F222"^^xsd:string .
 
@@ -2331,6 +2966,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup220
 :spacegroup220 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 220 ;
                :hasSpaceGroupShortSymbol "I-43d"^^xsd:string .
 
@@ -2338,6 +2975,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup221
 :spacegroup221 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 221 ;
                :hasSpaceGroupShortSymbol "Pm-3m"^^xsd:string .
 
@@ -2345,6 +2984,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup222
 :spacegroup222 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 222 ;
                :hasSpaceGroupShortSymbol "Pn-3n"^^xsd:string .
 
@@ -2352,6 +2993,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup223
 :spacegroup223 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 223 ;
                :hasSpaceGroupShortSymbol "Pm-3n"^^xsd:string .
 
@@ -2359,6 +3002,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup224
 :spacegroup224 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 224 ;
                :hasSpaceGroupShortSymbol "Pn-3m"^^xsd:string .
 
@@ -2366,6 +3011,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup225
 :spacegroup225 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 225 ;
                :hasSpaceGroupShortSymbol "Fm-3m"^^xsd:string .
 
@@ -2373,6 +3020,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup226
 :spacegroup226 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 226 ;
                :hasSpaceGroupShortSymbol "Fm-3c"^^xsd:string .
 
@@ -2380,6 +3029,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup227
 :spacegroup227 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 227 ;
                :hasSpaceGroupShortSymbol "Fd-3m"^^xsd:string .
 
@@ -2387,6 +3038,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup228
 :spacegroup228 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 228 ;
                :hasSpaceGroupShortSymbol "Fd-3c"^^xsd:string .
 
@@ -2394,6 +3047,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup229
 :spacegroup229 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 229 ;
                :hasSpaceGroupShortSymbol "Im-3m"^^xsd:string .
 
@@ -2401,6 +3056,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup23
 :spacegroup23 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 23 ;
               :hasSpaceGroupShortSymbol "I222"^^xsd:string .
 
@@ -2408,6 +3065,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup230
 :spacegroup230 rdf:type owl:NamedIndividual ,
                         :SpaceGroup ;
+               <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CScubic ,
+                                                                                                   :LScubic ;
                :hasSpaceGroupNumber 230 ;
                :hasSpaceGroupShortSymbol "Ia-3d"^^xsd:string .
 
@@ -2415,6 +3074,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup24
 :spacegroup24 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 24 ;
               :hasSpaceGroupShortSymbol "I2_12_12_1"^^xsd:string .
 
@@ -2422,6 +3083,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup25
 :spacegroup25 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 25 ;
               :hasSpaceGroupShortSymbol "Pmm2"^^xsd:string .
 
@@ -2429,6 +3092,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup26
 :spacegroup26 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 26 ;
               :hasSpaceGroupShortSymbol "Pmc2_1"^^xsd:string .
 
@@ -2436,6 +3101,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup27
 :spacegroup27 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 27 ;
               :hasSpaceGroupShortSymbol "Pcc2"^^xsd:string .
 
@@ -2443,6 +3110,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup28
 :spacegroup28 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 28 ;
               :hasSpaceGroupShortSymbol "Pma2"^^xsd:string .
 
@@ -2450,6 +3119,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup29
 :spacegroup29 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 29 ;
               :hasSpaceGroupShortSymbol "Pca2_1"^^xsd:string .
 
@@ -2457,6 +3128,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup3
 :spacegroup3 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                 :LSmonoclinic ;
              :hasSpaceGroupNumber 3 ;
              :hasSpaceGroupShortSymbol "P2"^^xsd:string .
 
@@ -2464,6 +3137,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup30
 :spacegroup30 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 30 ;
               :hasSpaceGroupShortSymbol "Pnc2"^^xsd:string .
 
@@ -2471,6 +3146,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup31
 :spacegroup31 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 31 ;
               :hasSpaceGroupShortSymbol "Pmn2_1"^^xsd:string .
 
@@ -2478,6 +3155,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup32
 :spacegroup32 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 32 ;
               :hasSpaceGroupShortSymbol "Pba2"^^xsd:string .
 
@@ -2485,6 +3164,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup33
 :spacegroup33 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 33 ;
               :hasSpaceGroupShortSymbol "Pna2_1"^^xsd:string .
 
@@ -2492,6 +3173,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup34
 :spacegroup34 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 34 ;
               :hasSpaceGroupShortSymbol "Pnn2"^^xsd:string .
 
@@ -2499,6 +3182,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup35
 :spacegroup35 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 35 ;
               :hasSpaceGroupShortSymbol "Cmm2"^^xsd:string .
 
@@ -2506,6 +3191,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup36
 :spacegroup36 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 36 ;
               :hasSpaceGroupShortSymbol "Cmc2_1"^^xsd:string .
 
@@ -2513,6 +3200,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup37
 :spacegroup37 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 37 ;
               :hasSpaceGroupShortSymbol "Ccc2"^^xsd:string .
 
@@ -2520,6 +3209,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup38
 :spacegroup38 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 38 ;
               :hasSpaceGroupShortSymbol "Amm2"^^xsd:string .
 
@@ -2527,6 +3218,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup39
 :spacegroup39 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 39 ;
               :hasSpaceGroupShortSymbol "Aem2"^^xsd:string .
 
@@ -2534,6 +3227,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup4
 :spacegroup4 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                 :LSmonoclinic ;
              :hasSpaceGroupNumber 4 ;
              :hasSpaceGroupShortSymbol "P2_1"^^xsd:string .
 
@@ -2541,6 +3236,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup40
 :spacegroup40 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 40 ;
               :hasSpaceGroupShortSymbol "Ama2"^^xsd:string .
 
@@ -2548,6 +3245,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup41
 :spacegroup41 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 41 ;
               :hasSpaceGroupShortSymbol "Aea2"^^xsd:string .
 
@@ -2555,6 +3254,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup42
 :spacegroup42 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 42 ;
               :hasSpaceGroupShortSymbol "Fmm2"^^xsd:string .
 
@@ -2562,6 +3263,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup43
 :spacegroup43 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 43 ;
               :hasSpaceGroupShortSymbol "Fdd2"^^xsd:string .
 
@@ -2569,6 +3272,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup44
 :spacegroup44 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 44 ;
               :hasSpaceGroupShortSymbol "Imm2"^^xsd:string .
 
@@ -2576,6 +3281,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup45
 :spacegroup45 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 45 ;
               :hasSpaceGroupShortSymbol "Iba2"^^xsd:string .
 
@@ -2583,6 +3290,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup46
 :spacegroup46 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 46 ;
               :hasSpaceGroupShortSymbol "Ima2"^^xsd:string .
 
@@ -2590,6 +3299,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup47
 :spacegroup47 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 47 ;
               :hasSpaceGroupShortSymbol "Pmmm"^^xsd:string .
 
@@ -2597,6 +3308,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup48
 :spacegroup48 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 48 ;
               :hasSpaceGroupShortSymbol "Pnnn"^^xsd:string .
 
@@ -2604,6 +3317,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup49
 :spacegroup49 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 49 ;
               :hasSpaceGroupShortSymbol "Pccm"^^xsd:string .
 
@@ -2611,6 +3326,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup5
 :spacegroup5 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                 :LSmonoclinic ;
              :hasSpaceGroupNumber 5 ;
              :hasSpaceGroupShortSymbol "C2"^^xsd:string .
 
@@ -2618,6 +3335,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup50
 :spacegroup50 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 50 ;
               :hasSpaceGroupShortSymbol "Pban"^^xsd:string .
 
@@ -2625,6 +3344,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup51
 :spacegroup51 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 51 ;
               :hasSpaceGroupShortSymbol "Pmma"^^xsd:string .
 
@@ -2632,6 +3353,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup52
 :spacegroup52 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 52 ;
               :hasSpaceGroupShortSymbol "Pnna"^^xsd:string .
 
@@ -2639,6 +3362,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup53
 :spacegroup53 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 53 ;
               :hasSpaceGroupShortSymbol "Pmna"^^xsd:string .
 
@@ -2646,6 +3371,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup54
 :spacegroup54 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 54 ;
               :hasSpaceGroupShortSymbol "Pcca"^^xsd:string .
 
@@ -2653,6 +3380,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup55
 :spacegroup55 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 55 ;
               :hasSpaceGroupShortSymbol "Pbam"^^xsd:string .
 
@@ -2660,6 +3389,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup56
 :spacegroup56 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 56 ;
               :hasSpaceGroupShortSymbol "Pccn"^^xsd:string .
 
@@ -2667,6 +3398,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup57
 :spacegroup57 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 57 ;
               :hasSpaceGroupShortSymbol "Pbcm"^^xsd:string .
 
@@ -2674,6 +3407,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup58
 :spacegroup58 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 58 ;
               :hasSpaceGroupShortSymbol "Pnnm"^^xsd:string .
 
@@ -2681,6 +3416,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup59
 :spacegroup59 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 59 ;
               :hasSpaceGroupShortSymbol "Pmmn"^^xsd:string .
 
@@ -2688,6 +3425,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup6
 :spacegroup6 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                 :LSmonoclinic ;
              :hasSpaceGroupNumber 6 ;
              :hasSpaceGroupShortSymbol "Pm"^^xsd:string .
 
@@ -2695,6 +3434,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup60
 :spacegroup60 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 60 ;
               :hasSpaceGroupShortSymbol "Pbcn"^^xsd:string .
 
@@ -2702,6 +3443,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup61
 :spacegroup61 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 61 ;
               :hasSpaceGroupShortSymbol "Pbca"^^xsd:string .
 
@@ -2709,6 +3452,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup62
 :spacegroup62 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 62 ;
               :hasSpaceGroupShortSymbol "Pnma"^^xsd:string .
 
@@ -2716,6 +3461,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup63
 :spacegroup63 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 63 ;
               :hasSpaceGroupShortSymbol "Cmcm"^^xsd:string .
 
@@ -2723,6 +3470,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup64
 :spacegroup64 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 64 ;
               :hasSpaceGroupShortSymbol "Cmce"^^xsd:string .
 
@@ -2730,6 +3479,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup65
 :spacegroup65 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 65 ;
               :hasSpaceGroupShortSymbol "Cmmm"^^xsd:string .
 
@@ -2737,6 +3488,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup66
 :spacegroup66 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 66 ;
               :hasSpaceGroupShortSymbol "Cccm"^^xsd:string .
 
@@ -2744,6 +3497,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup67
 :spacegroup67 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 67 ;
               :hasSpaceGroupShortSymbol "Cmme"^^xsd:string .
 
@@ -2751,6 +3506,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup68
 :spacegroup68 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 68 ;
               :hasSpaceGroupShortSymbol "Ccce"^^xsd:string .
 
@@ -2758,6 +3515,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup69
 :spacegroup69 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 69 ;
               :hasSpaceGroupShortSymbol "Fmmm"^^xsd:string .
 
@@ -2765,6 +3524,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup7
 :spacegroup7 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                 :LSmonoclinic ;
              :hasSpaceGroupNumber 7 ;
              :hasSpaceGroupShortSymbol "Pc"^^xsd:string .
 
@@ -2772,6 +3533,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup70
 :spacegroup70 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 70 ;
               :hasSpaceGroupShortSymbol "Fddd"^^xsd:string .
 
@@ -2779,6 +3542,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup71
 :spacegroup71 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 71 ;
               :hasSpaceGroupShortSymbol "Immm"^^xsd:string .
 
@@ -2786,6 +3551,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup72
 :spacegroup72 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 72 ;
               :hasSpaceGroupShortSymbol "Ibam"^^xsd:string .
 
@@ -2793,6 +3560,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup73
 :spacegroup73 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 73 ;
               :hasSpaceGroupShortSymbol "Ibca"^^xsd:string .
 
@@ -2800,6 +3569,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup74
 :spacegroup74 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSorthorhombic ,
+                                                                                                  :LSorthorhombic ;
               :hasSpaceGroupNumber 74 ;
               :hasSpaceGroupShortSymbol "Imma"^^xsd:string .
 
@@ -2807,6 +3578,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup75
 :spacegroup75 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 75 ;
               :hasSpaceGroupShortSymbol "P4"^^xsd:string .
 
@@ -2814,6 +3587,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup76
 :spacegroup76 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 76 ;
               :hasSpaceGroupShortSymbol "P4_1"^^xsd:string .
 
@@ -2821,6 +3596,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup77
 :spacegroup77 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 77 ;
               :hasSpaceGroupShortSymbol "P4_2"^^xsd:string .
 
@@ -2828,6 +3605,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup78
 :spacegroup78 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 78 ;
               :hasSpaceGroupShortSymbol "P4_3"^^xsd:string .
 
@@ -2835,6 +3614,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup79
 :spacegroup79 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 79 ;
               :hasSpaceGroupShortSymbol "I4"^^xsd:string .
 
@@ -2842,6 +3623,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup8
 :spacegroup8 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                 :LSmonoclinic ;
              :hasSpaceGroupNumber 8 ;
              :hasSpaceGroupShortSymbol "Cm"^^xsd:string .
 
@@ -2849,6 +3632,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup80
 :spacegroup80 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 80 ;
               :hasSpaceGroupShortSymbol "I4_1"^^xsd:string .
 
@@ -2856,6 +3641,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup81
 :spacegroup81 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 81 ;
               :hasSpaceGroupShortSymbol "P-4"^^xsd:string .
 
@@ -2863,6 +3650,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup82
 :spacegroup82 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 82 ;
               :hasSpaceGroupShortSymbol "I-4"^^xsd:string .
 
@@ -2870,6 +3659,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup83
 :spacegroup83 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 83 ;
               :hasSpaceGroupShortSymbol "P4/m"^^xsd:string .
 
@@ -2877,6 +3668,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup84
 :spacegroup84 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 84 ;
               :hasSpaceGroupShortSymbol "P4_2/m"^^xsd:string .
 
@@ -2884,6 +3677,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup85
 :spacegroup85 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 85 ;
               :hasSpaceGroupShortSymbol "P4/n"^^xsd:string .
 
@@ -2891,6 +3686,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup86
 :spacegroup86 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 86 ;
               :hasSpaceGroupShortSymbol "P4_2/n"^^xsd:string .
 
@@ -2898,6 +3695,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup87
 :spacegroup87 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 87 ;
               :hasSpaceGroupShortSymbol "I4/m"^^xsd:string .
 
@@ -2905,6 +3704,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup88
 :spacegroup88 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 88 ;
               :hasSpaceGroupShortSymbol "I4_1/a"^^xsd:string .
 
@@ -2912,6 +3713,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup89
 :spacegroup89 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 89 ;
               :hasSpaceGroupShortSymbol "P422"^^xsd:string .
 
@@ -2919,6 +3722,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup9
 :spacegroup9 rdf:type owl:NamedIndividual ,
                       :SpaceGroup ;
+             <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CSmonoclinic ,
+                                                                                                 :LSmonoclinic ;
              :hasSpaceGroupNumber 9 ;
              :hasSpaceGroupShortSymbol "Cc"^^xsd:string .
 
@@ -2926,6 +3731,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup90
 :spacegroup90 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 90 ;
               :hasSpaceGroupShortSymbol "P42_12"^^xsd:string .
 
@@ -2933,6 +3740,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup91
 :spacegroup91 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 91 ;
               :hasSpaceGroupShortSymbol "P4_122"^^xsd:string .
 
@@ -2940,6 +3749,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup92
 :spacegroup92 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 92 ;
               :hasSpaceGroupShortSymbol "P4_12_12"^^xsd:string .
 
@@ -2947,6 +3758,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup93
 :spacegroup93 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 93 ;
               :hasSpaceGroupShortSymbol "P4_222"^^xsd:string .
 
@@ -2954,6 +3767,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup94
 :spacegroup94 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 94 ;
               :hasSpaceGroupShortSymbol "P4_22_12"^^xsd:string .
 
@@ -2961,6 +3776,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup95
 :spacegroup95 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 95 ;
               :hasSpaceGroupShortSymbol "P4_322"^^xsd:string .
 
@@ -2968,6 +3785,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup96
 :spacegroup96 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 96 ;
               :hasSpaceGroupShortSymbol "P4_32_12"^^xsd:string .
 
@@ -2975,6 +3794,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup97
 :spacegroup97 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 97 ;
               :hasSpaceGroupShortSymbol "I422"^^xsd:string .
 
@@ -2982,6 +3803,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup98
 :spacegroup98 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 98 ;
               :hasSpaceGroupShortSymbol "I4_122"^^xsd:string .
 
@@ -2989,6 +3812,8 @@
 ###  http://www.stream-ontology.com/crystalstructure#spacegroup99
 :spacegroup99 rdf:type owl:NamedIndividual ,
                        :SpaceGroup ;
+              <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> :CStetragonal ,
+                                                                                                  :LStetragonal ;
               :hasSpaceGroupNumber 99 ;
               :hasSpaceGroupShortSymbol "P4mm"^^xsd:string .
 
