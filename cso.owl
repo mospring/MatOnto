@@ -311,6 +311,11 @@
                              ] .
 
 
+###  http://www.stream-ontology.com/crystalstructure#AtomicOrbital
+:AtomicOrbital rdf:type owl:Class ;
+               rdfs:subClassOf :Orbital .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#BravaisLattice
 :BravaisLattice rdf:type owl:Class ;
                 rdfs:subClassOf :RealSpaceLattice ,
@@ -349,10 +354,6 @@
                          [ rdf:type owl:Restriction ;
                            owl:onProperty <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c> ;
                            owl:someValuesFrom :CrystalUnitCell
-                         ] ,
-                         [ rdf:type owl:Restriction ;
-                           owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
-                           owl:someValuesFrom :AtomInSolid
                          ] .
 
 
@@ -426,6 +427,11 @@
                                  ] .
 
 
+###  http://www.stream-ontology.com/crystalstructure#Derivation
+:Derivation rdf:type owl:Class ;
+            rdfs:subClassOf :MathematicalOperation .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#ElectronInSolid
 :ElectronInSolid rdf:type owl:Class ;
                  rdfs:subClassOf <http://emmo.info/emmo/middle/physicalistic#EMMO_8043d3c6_a4c1_4089_ba34_9744e28e5b3d> .
@@ -433,7 +439,7 @@
 
 ###  http://www.stream-ontology.com/crystalstructure#FourierTransform
 :FourierTransform rdf:type owl:Class ;
-                  rdfs:subClassOf :Operation .
+                  rdfs:subClassOf :MathematicalOperation .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#GeneralWyckoffPosition
@@ -483,6 +489,11 @@
                rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec> .
 
 
+###  http://www.stream-ontology.com/crystalstructure#MathematicalOperation
+:MathematicalOperation rdf:type owl:Class ;
+                       rdfs:subClassOf :Operation .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#Operation
 :Operation rdf:type owl:Class ;
            rdfs:subClassOf <http://emmo.info/emmo/middle/holistic#EMMO_43e9a05d_98af_41b4_92f6_00f79a09bfce> ,
@@ -494,6 +505,25 @@
                              owl:onProperty :hasOutput ;
                              owl:someValuesFrom <http://emmo.info/emmo/middle/holistic#EMMO_49804605_c0fe_4538_abda_f70ba1dc8a5d>
                            ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#Orbital
+:Orbital rdf:type owl:Class ;
+         rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_6eca09be_17e9_445e_abc9_000aa61b7a11> ,
+                         :WaveFunction ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/models#EMMO_24c71baf_6db6_48b9_86c8_8c70cf36db0c>
+                                          ] ;
+                           owl:someValuesFrom [ owl:intersectionOf ( <http://emmo.info/emmo/middle/physicalistic#EMMO_8043d3c6_a4c1_4089_ba34_9744e28e5b3d>
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                                                                      ] ;
+                                                                       owl:someValuesFrom <http://emmo.info/emmo/middle/physicalistic#EMMO_4207e895_8b83_4318_996a_72cfb32acd94>
+                                                                     ]
+                                                                   ) ;
+                                                rdf:type owl:Class
+                                              ]
+                         ] .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#PointGroup
@@ -509,10 +539,6 @@
                                            ] ;
                             owl:someValuesFrom :RealSpace
                           ] .
-
-
-###  http://www.stream-ontology.com/crystalstructure#PrimitiveUnitCell
-:PrimitiveUnitCell rdf:type owl:Class .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#RealSpace
@@ -561,6 +587,15 @@
                     rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_53935db0_af45_4426_b9e9_244a0d77db00> .
 
 
+###  http://www.stream-ontology.com/crystalstructure#SchroedingerEquation
+:SchroedingerEquation rdf:type owl:Class ;
+                      rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_27c5d8c6_8af7_4d63_beb1_ec37cd8b3fa3> ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                        owl:someValuesFrom :WaveFunction
+                                      ] .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#SpaceGroup
 :SpaceGroup rdf:type owl:Class ;
             rdfs:subClassOf :Symmetry ,
@@ -593,6 +628,34 @@
           rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_f7ed665b_c2e1_42bc_889b_6b42ed3a36f0> .
 
 
+###  http://www.stream-ontology.com/crystalstructure#TimeDependentSchroedingerEquation
+:TimeDependentSchroedingerEquation rdf:type owl:Class ;
+                                   rdfs:subClassOf :SchroedingerEquation .
+
+
+###  http://www.stream-ontology.com/crystalstructure#TimeDerivation
+:TimeDerivation rdf:type owl:Class ;
+                rdfs:subClassOf :Derivation ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :hasInput ;
+                                  owl:someValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_d4f7d378_5e3b_468a_baa1_a7e98358cda7>
+                                ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#TimeIndependentSchroedingerEquation
+:TimeIndependentSchroedingerEquation rdf:type owl:Class ;
+                                     rdfs:subClassOf :SchroedingerEquation ,
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                       owl:someValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2>
+                                                     ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#WaveFunction
+:WaveFunction rdf:type owl:Class ;
+              rdfs:subClassOf <http://emmo.info/emmo/middle/models#EMMO_b29fd350_39aa_4af7_9459_3faa0544cba6> .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#WyckoffPosition
 :WyckoffPosition rdf:type owl:Class ;
                  rdfs:subClassOf :Position ,
@@ -610,6 +673,16 @@
                                  ] .
 
 
+###  http://www.stream-ontology.com/crystalstructure#dOrbital
+:dOrbital rdf:type owl:Class ;
+          rdfs:subClassOf :AtomicOrbital .
+
+
+###  http://www.stream-ontology.com/crystalstructure#fOrbital
+:fOrbital rdf:type owl:Class ;
+          rdfs:subClassOf :AtomicOrbital .
+
+
 ###  http://www.stream-ontology.com/crystalstructure#kPoint
 :kPoint rdf:type owl:Class ;
         rdfs:subClassOf <http://emmo.info/emmo/middle/perceptual#EMMO_39362460_2a97_4367_8f93_0418c2ac9a08> ,
@@ -618,6 +691,16 @@
                                          ] ;
                           owl:someValuesFrom :ReciprocalSpace
                         ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#pOrbital
+:pOrbital rdf:type owl:Class ;
+          rdfs:subClassOf :AtomicOrbital .
+
+
+###  http://www.stream-ontology.com/crystalstructure#sOrbital
+:sOrbital rdf:type owl:Class ;
+          rdfs:subClassOf :AtomicOrbital .
 
 
 #################################################################
