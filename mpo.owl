@@ -14,8 +14,24 @@
 #    Object Properties
 #################################################################
 
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#dependsOn
+:dependsOn rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf <http://emmo.info/emmo/top/mereotopology#EMMO_4d6504f1_c470_4ce9_b941_bbbebc9ab05d> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#hasDominantOverlapWith
+:hasDominantOverlapWith rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf <http://emmo.info/emmo/top/mereotopology#EMMO_d893d373_b579_4867_841e_1c2b31a8d2c6> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#hasProjection
+:hasProjection rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf <http://emmo.info/emmo/top/mereotopology#EMMO_8c898653_1118_4682_9bbf_6cc334d16a99> .
+
+
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#isDerivedFrom
-:isDerivedFrom rdf:type owl:ObjectProperty .
+:isDerivedFrom rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf <http://emmo.info/emmo/top/mereotopology#EMMO_4d6504f1_c470_4ce9_b941_bbbebc9ab05d> .
 
 
 #################################################################
@@ -32,6 +48,44 @@
 
 ###  http://emmo.info/emmo/middle/isq#EMMO_1f087811_06cb_42d5_90fb_25d0e7e068ef
 <http://emmo.info/emmo/middle/isq#EMMO_1f087811_06cb_42d5_90fb_25d0e7e068ef> rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec> .
+
+
+###  http://emmo.info/emmo/middle/materials#EMMO_a2b006f2_bbfd_4dba_bcaa_3fca20cd6be1
+<http://emmo.info/emmo/middle/materials#EMMO_a2b006f2_bbfd_4dba_bcaa_3fca20cd6be1> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                                                                     owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#AtomInSolid>
+                                                                                                   ] .
+
+
+###  http://emmo.info/emmo/middle/physicalistic#EMMO_25f8b804_9a0b_4387_a3e7_b35bce5365ee
+<http://emmo.info/emmo/middle/physicalistic#EMMO_25f8b804_9a0b_4387_a3e7_b35bce5365ee> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                                                         owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                                                                                         owl:someValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_852b4ab8_fc29_4749_a8c7_b92d4fca7d5a>
+                                                                                                       ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#AbsorptionCoefficient
+:AbsorptionCoefficient rdf:type owl:Class ;
+                       rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_2946d40b_24a1_47fa_8176_e3f79bb45064> ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty :dependsOn ;
+                                         owl:someValuesFrom [ owl:intersectionOf ( <http://emmo.info/emmo/middle/isq#EMMO_852b4ab8_fc29_4749_a8c7_b92d4fca7d5a>
+                                                                                   [ rdf:type owl:Restriction ;
+                                                                                     owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204>
+                                                                                                    ] ;
+                                                                                     owl:someValuesFrom <http://emmo.info/emmo/middle/physicalistic#EMMO_25f8b804_9a0b_4387_a3e7_b35bce5365ee>
+                                                                                   ]
+                                                                                 ) ;
+                                                              rdf:type owl:Class
+                                                            ]
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_67fc0a36_8dcb_4ffa_9a43_31074efa3296> ;
+                                         owl:allValuesFrom [ rdf:type owl:Restriction ;
+                                                             owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_bed1d005_b04e_4a90_94cf_02bc678a8569> ;
+                                                             owl:allValuesFrom :PerLengthDimension
+                                                           ]
+                                       ] .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Acceleration
@@ -86,7 +140,41 @@
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#BandGap
 :BandGap rdf:type owl:Class ;
-         rdfs:subClassOf :EnergyDifference .
+         rdfs:subClassOf :EnergyDifference ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty [ owl:inverseOf <http://www.stream-ontology.com/crystalstructure#hasOutput>
+                                          ] ;
+                           owl:someValuesFrom [ owl:intersectionOf ( :SubstractionOperation
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                                                       owl:someValuesFrom [ owl:intersectionOf ( :BandEnergy
+                                                                                                                 :Minuend
+                                                                                                                 [ rdf:type owl:Restriction ;
+                                                                                                                   owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                                                                                                                  ] ;
+                                                                                                                   owl:someValuesFrom :ConductionBand
+                                                                                                                 ]
+                                                                                                               ) ;
+                                                                                            rdf:type owl:Class
+                                                                                          ]
+                                                                     ]
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty <http://www.stream-ontology.com/crystalstructure#hasInput> ;
+                                                                       owl:someValuesFrom [ owl:intersectionOf ( :BandEnergy
+                                                                                                                 :Subtrahend
+                                                                                                                 [ rdf:type owl:Restriction ;
+                                                                                                                   owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                                                                                                                  ] ;
+                                                                                                                   owl:someValuesFrom :ValenceBand
+                                                                                                                 ]
+                                                                                                               ) ;
+                                                                                            rdf:type owl:Class
+                                                                                          ]
+                                                                     ]
+                                                                   ) ;
+                                                rdf:type owl:Class
+                                              ]
+                         ] .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#BandIndex
@@ -94,9 +182,54 @@
            rdfs:subClassOf <http://emmo.info/emmo/top/semiotics#EMMO_0cd58641_824c_4851_907f_f4c3be76630c> .
 
 
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#BandOccupation
+:BandOccupation rdf:type owl:Class ;
+                rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_02c0621e_a527_4790_8a0f_2bb51973c819> .
+
+
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#BandStructure
 :BandStructure rdf:type owl:Class ;
-               rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_02c0621e_a527_4790_8a0f_2bb51973c819> .
+               rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_02c0621e_a527_4790_8a0f_2bb51973c819> ,
+                               <http://emmo.info/emmo/middle/properties#EMMO_d0200cf1_e4f4_45ae_873f_b9359daea3cd> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                 owl:someValuesFrom :EnergyBand
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                 owl:someValuesFrom :FermiEnergy
+                               ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ComplexNumber
+:ComplexNumber rdf:type owl:Class ;
+               rdfs:subClassOf :Sum ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                 owl:someValuesFrom :ImaginaryNumber
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                 owl:someValuesFrom :ImaginaryPart
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                 owl:someValuesFrom :RealPart
+                               ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ComplexRefractiveIndex
+:ComplexRefractiveIndex rdf:type owl:Class ;
+                        rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_2946d40b_24a1_47fa_8176_e3f79bb45064> ,
+                                        :ComplexNumber ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                          owl:someValuesFrom :ExtinctionCoefficient
+                                        ] ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                          owl:someValuesFrom :RefractiveIndex
+                                        ] .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ConductionBand
@@ -119,7 +252,10 @@
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Difference
 :Difference rdf:type owl:Class ;
-            rdfs:subClassOf :MathematicalParticipant .
+            rdfs:subClassOf :MathematicalParticipant ;
+            rdfs:comment """The difference is the output of the SubstractionOperation that has a Minuend and a Subtrahend as Inputs.
+
+Difference = Minuend - Subtrahend""" .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Dividend
@@ -159,17 +295,21 @@
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ElectronicBandStructure
 :ElectronicBandStructure rdf:type owl:Class ;
-                         rdfs:subClassOf :BandStructure ,
-                                         [ rdf:type owl:Restriction ;
-                                           owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204>
-                                                          ] ;
-                                           owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#ElectronInSolid>
-                                         ] .
+                         rdfs:subClassOf :BandStructure .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#EnergyBand
 :EnergyBand rdf:type owl:Class ;
             rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_02c0621e_a527_4790_8a0f_2bb51973c819> ,
+                            <http://emmo.info/emmo/middle/perceptual#EMMO_0ef4ff4a_5458_4f2a_b51f_4689d472a3f2> ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                              owl:someValuesFrom :BandOccupation
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                              owl:someValuesFrom :OrbitalCharacter
+                            ] ,
                             [ rdf:type owl:Restriction ;
                               owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
                               owl:someValuesFrom :BandEnergy
@@ -186,7 +326,14 @@
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#EnergyDifference
 :EnergyDifference rdf:type owl:Class ;
-                  rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> .
+                  rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> ,
+                                  :Difference .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ExtinctionCoefficient
+:ExtinctionCoefficient rdf:type owl:Class ;
+                       rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_2946d40b_24a1_47fa_8176_e3f79bb45064> ,
+                                       :ImaginaryPart .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#FermiEnergy
@@ -194,13 +341,32 @@
              rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> .
 
 
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ImaginaryNumber
+:ImaginaryNumber rdf:type owl:Class ;
+                 rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_5be83f9c_a4ba_4b9a_be1a_5bfc6e891231> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ImaginaryPart
+:ImaginaryPart rdf:type owl:Class ;
+               rdfs:subClassOf :Summand ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                 owl:someValuesFrom <http://emmo.info/emmo/middle/math#EMMO_18d180e4_5e3e_42f7_820c_e08951223486>
+                               ] .
+
+
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#LengthPerSquareTimeDimension
-:LengthPerSquareTimeDimension rdf:type owl:Class .
+:LengthPerSquareTimeDimension rdf:type owl:Class ;
+                              rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_9895a1b4_f0a5_4167_ac5e_97db40b8bfcc> .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#MathematicalParticipant
 :MathematicalParticipant rdf:type owl:Class ;
-                         rdfs:subClassOf <http://emmo.info/emmo/middle/holistic#EMMO_49804605_c0fe_4538_abda_f70ba1dc8a5d> .
+                         rdfs:subClassOf [ owl:intersectionOf ( <http://emmo.info/emmo/middle/holistic#EMMO_49804605_c0fe_4538_abda_f70ba1dc8a5d>
+                                                                <http://emmo.info/emmo/middle/math#EMMO_54ee6b5e_5261_44a8_86eb_5717e7fdb9d0>
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ] .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Minuend
@@ -233,7 +399,10 @@
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#MultiplicationProduct
 :MultiplicationProduct rdf:type owl:Class ;
-                       rdfs:subClassOf :MathematicalParticipant .
+                       rdfs:subClassOf :MathematicalParticipant ;
+                       rdfs:comment """The MultiplicationProduct is the output of the MultiplicationOperation which has two MultiplicationFactors as Input.
+
+MultiplicationProduct = MultiplicationFactor * MultiplicationFactor""" .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#NumberOfStates
@@ -253,14 +422,143 @@
                                 ] .
 
 
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#OrbitalCharacter
+:OrbitalCharacter rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Restriction ;
+                                        owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                        owl:someValuesFrom [ owl:intersectionOf ( <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2>
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                                                                                   ] ;
+                                                                                    owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#TimeIndependentSchroedingerEquation>
+                                                                                                                              [ rdf:type owl:Restriction ;
+                                                                                                                                owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                                                                                                owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#Orbital>
+                                                                                                                                                                          [ rdf:type owl:Restriction ;
+                                                                                                                                                                            owl:onProperty :hasDominantOverlapWith ;
+                                                                                                                                                                            owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#AtomicOrbital>
+                                                                                                                                                                          ]
+                                                                                                                                                                        ) ;
+                                                                                                                                                     rdf:type owl:Class
+                                                                                                                                                   ]
+                                                                                                                              ]
+                                                                                                                            ) ;
+                                                                                                         rdf:type owl:Class
+                                                                                                       ]
+                                                                                  ]
+                                                                                ) ;
+                                                             rdf:type owl:Class
+                                                           ]
+                                      ] ;
+                  rdfs:subClassOf <http://emmo.info/emmo/middle/properties#EMMO_d8aa8e1f_b650_416d_88a0_5118de945456> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#PartialDensityOfStates
+:PartialDensityOfStates rdf:type owl:Class ;
+                        rdfs:subClassOf :DensityOfStates .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#PerLengthDimension
+:PerLengthDimension rdf:type owl:Class ;
+                    owl:equivalentClass [ rdf:type owl:Restriction ;
+                                          owl:onProperty <http://emmo.info/emmo/middle/perceptual#EMMO_23b579e1_8088_45b5_9975_064014026c42> ;
+                                          owl:hasValue "T0 L-1 M0 I0 Θ0 N0 J0"
+                                        ] ;
+                    rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_9895a1b4_f0a5_4167_ac5e_97db40b8bfcc> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#PhotonEnergy
+:PhotonEnergy rdf:type owl:Class ;
+              rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :dependsOn ;
+                                owl:someValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_852b4ab8_fc29_4749_a8c7_b92d4fca7d5a>
+                              ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ProjectedDensityOfStates
+:ProjectedDensityOfStates rdf:type owl:Class ;
+                          rdfs:subClassOf :DensityOfStates ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                            owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#AtomicOrbital>
+                                          ] .
+
+
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Quotient
 :Quotient rdf:type owl:Class ;
-          rdfs:subClassOf :MathematicalParticipant .
+          rdfs:subClassOf :MathematicalParticipant ;
+          rdfs:comment """The Quotient is the output of the DivisionOperation which has the Dividend and the Divisor as Inputs.
+
+Quotient = Dividend / Divisor""" .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#RealPart
+:RealPart rdf:type owl:Class ;
+          rdfs:subClassOf :Summand ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                            owl:someValuesFrom <http://emmo.info/emmo/middle/math#EMMO_18d180e4_5e3e_42f7_820c_e08951223486>
+                          ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#RefractiveIndex
+:RefractiveIndex rdf:type owl:Class ;
+                 rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_2946d40b_24a1_47fa_8176_e3f79bb45064> ,
+                                 :RealPart .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#RelativePermittivity
+:RelativePermittivity rdf:type owl:Class ;
+                      rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_2946d40b_24a1_47fa_8176_e3f79bb45064> ,
+                                      :ComplexNumber ;
+                      <http://emmo.info/emmo/top/annotations#EMMO_21ae69b4_235e_479d_8dd8_4f756f694c1b> "Dielectric Constant (deprecated)" .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#SpinChannel
 :SpinChannel rdf:type owl:Class ;
              rdfs:subClassOf <http://emmo.info/emmo/top/semiotics#EMMO_0cd58641_824c_4851_907f_f4c3be76630c> .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Strain
+:Strain rdf:type owl:Class ;
+        rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_2946d40b_24a1_47fa_8176_e3f79bb45064> ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :dependsOn ;
+                          owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#Position>
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_67fc0a36_8dcb_4ffa_9a43_31074efa3296> ;
+                          owl:allValuesFrom [ rdf:type owl:Restriction ;
+                                              owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_bed1d005_b04e_4a90_94cf_02bc678a8569> ;
+                                              owl:allValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_3227b821_26a5_4c7c_9c01_5c24483e0bd0>
+                                            ]
+                        ] ;
+        rdfs:comment "Description of deformation in terms of relative displacement of particles in a body" .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Stress
+:Stress rdf:type owl:Class ;
+        rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_2946d40b_24a1_47fa_8176_e3f79bb45064> ,
+                        [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :isDerivedFrom ;
+                                                 owl:someValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2>
+                                               ]
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :isDerivedFrom ;
+                                                 owl:someValuesFrom :Strain
+                                               ]
+                                             ) ;
+                          rdf:type owl:Class
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_67fc0a36_8dcb_4ffa_9a43_31074efa3296> ;
+                          owl:allValuesFrom [ rdf:type owl:Restriction ;
+                                              owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_bed1d005_b04e_4a90_94cf_02bc678a8569> ;
+                                              owl:allValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_53bd0c90_41c3_46e2_8779_cd2a80f7e18b>
+                                            ]
+                        ] ;
+        <http://emmo.info/emmo/top/annotations#EMMO_6dd685dd_1895_46e4_b227_be9f7d643c25> "http://dbpedia.org/page/Stress_(mechanics)" .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#SubstractionOperation
@@ -291,7 +589,10 @@
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Sum
 :Sum rdf:type owl:Class ;
-     rdfs:subClassOf :MathematicalParticipant .
+     rdfs:subClassOf :MathematicalParticipant ;
+     rdfs:comment """The sum is the output of the AdditionOperation which has at least two Summands as Inputs.
+
+Sum = Summand + Summand""" .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Summand
@@ -299,6 +600,15 @@
          rdfs:subClassOf :MathematicalParticipant ;
          <http://emmo.info/emmo/top/annotations#EMMO_21ae69b4_235e_479d_8dd8_4f756f694c1b> "Addend" ;
          rdfs:label "Summand" .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#TotalDensityOfStates
+:TotalDensityOfStates rdf:type owl:Class ;
+                      rdfs:subClassOf :DensityOfStates ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :hasProjection ;
+                                        owl:someValuesFrom :ProjectedDensityOfStates
+                                      ] .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ValenceBand
@@ -332,16 +642,131 @@
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#VibrationalBandStructure
 :VibrationalBandStructure rdf:type owl:Class ;
-                          rdfs:subClassOf :BandStructure ,
-                                          [ rdf:type owl:Restriction ;
-                                            owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204>
-                                                           ] ;
-                                            owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#AtomInSolid>
-                                          ] .
+                          rdfs:subClassOf :BandStructure .
 
 
-###  http://www.stream-ontology.com/MaterialsPropertiesOntology#kPath
-:kPath rdf:type owl:Class .
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#dOrbitalCharacter
+:dOrbitalCharacter rdf:type owl:Class ;
+                   owl:equivalentClass [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                         owl:someValuesFrom [ owl:intersectionOf ( <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2>
+                                                                                   [ rdf:type owl:Restriction ;
+                                                                                     owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                                                                                    ] ;
+                                                                                     owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#TimeIndependentSchroedingerEquation>
+                                                                                                                               [ rdf:type owl:Restriction ;
+                                                                                                                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                                                                                                 owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#Orbital>
+                                                                                                                                                                           [ rdf:type owl:Restriction ;
+                                                                                                                                                                             owl:onProperty :hasDominantOverlapWith ;
+                                                                                                                                                                             owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#dOrbital>
+                                                                                                                                                                           ]
+                                                                                                                                                                         ) ;
+                                                                                                                                                      rdf:type owl:Class
+                                                                                                                                                    ]
+                                                                                                                               ]
+                                                                                                                             ) ;
+                                                                                                          rdf:type owl:Class
+                                                                                                        ]
+                                                                                   ]
+                                                                                 ) ;
+                                                              rdf:type owl:Class
+                                                            ]
+                                       ] ;
+                   rdfs:subClassOf :OrbitalCharacter .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#fOrbitalCharacter
+:fOrbitalCharacter rdf:type owl:Class ;
+                   owl:equivalentClass [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                         owl:someValuesFrom [ owl:intersectionOf ( <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2>
+                                                                                   [ rdf:type owl:Restriction ;
+                                                                                     owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                                                                                    ] ;
+                                                                                     owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#TimeIndependentSchroedingerEquation>
+                                                                                                                               [ rdf:type owl:Restriction ;
+                                                                                                                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                                                                                                 owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#Orbital>
+                                                                                                                                                                           [ rdf:type owl:Restriction ;
+                                                                                                                                                                             owl:onProperty :hasDominantOverlapWith ;
+                                                                                                                                                                             owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#fOrbital>
+                                                                                                                                                                           ]
+                                                                                                                                                                         ) ;
+                                                                                                                                                      rdf:type owl:Class
+                                                                                                                                                    ]
+                                                                                                                               ]
+                                                                                                                             ) ;
+                                                                                                          rdf:type owl:Class
+                                                                                                        ]
+                                                                                   ]
+                                                                                 ) ;
+                                                              rdf:type owl:Class
+                                                            ]
+                                       ] ;
+                   rdfs:subClassOf :OrbitalCharacter .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#pOrbitalCharacter
+:pOrbitalCharacter rdf:type owl:Class ;
+                   owl:equivalentClass [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                         owl:someValuesFrom [ owl:intersectionOf ( <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2>
+                                                                                   [ rdf:type owl:Restriction ;
+                                                                                     owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                                                                                    ] ;
+                                                                                     owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#TimeIndependentSchroedingerEquation>
+                                                                                                                               [ rdf:type owl:Restriction ;
+                                                                                                                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                                                                                                 owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#Orbital>
+                                                                                                                                                                           [ rdf:type owl:Restriction ;
+                                                                                                                                                                             owl:onProperty :hasDominantOverlapWith ;
+                                                                                                                                                                             owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#pOrbital>
+                                                                                                                                                                           ]
+                                                                                                                                                                         ) ;
+                                                                                                                                                      rdf:type owl:Class
+                                                                                                                                                    ]
+                                                                                                                               ]
+                                                                                                                             ) ;
+                                                                                                          rdf:type owl:Class
+                                                                                                        ]
+                                                                                   ]
+                                                                                 ) ;
+                                                              rdf:type owl:Class
+                                                            ]
+                                       ] ;
+                   rdfs:subClassOf :OrbitalCharacter .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#sOrbitalCharacter
+:sOrbitalCharacter rdf:type owl:Class ;
+                   owl:equivalentClass [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                         owl:someValuesFrom [ owl:intersectionOf ( <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2>
+                                                                                   [ rdf:type owl:Restriction ;
+                                                                                     owl:onProperty [ owl:inverseOf <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe>
+                                                                                                    ] ;
+                                                                                     owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#TimeIndependentSchroedingerEquation>
+                                                                                                                               [ rdf:type owl:Restriction ;
+                                                                                                                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                                                                                                 owl:someValuesFrom [ owl:intersectionOf ( <http://www.stream-ontology.com/crystalstructure#Orbital>
+                                                                                                                                                                           [ rdf:type owl:Restriction ;
+                                                                                                                                                                             owl:onProperty :hasDominantOverlapWith ;
+                                                                                                                                                                             owl:someValuesFrom <http://www.stream-ontology.com/crystalstructure#sOrbital>
+                                                                                                                                                                           ]
+                                                                                                                                                                         ) ;
+                                                                                                                                                      rdf:type owl:Class
+                                                                                                                                                    ]
+                                                                                                                               ]
+                                                                                                                             ) ;
+                                                                                                          rdf:type owl:Class
+                                                                                                        ]
+                                                                                   ]
+                                                                                 ) ;
+                                                              rdf:type owl:Class
+                                                            ]
+                                       ] ;
+                   rdfs:subClassOf :OrbitalCharacter .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#AtomInSolid
@@ -353,6 +778,24 @@
                                                                                 owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
                                                                                 owl:someValuesFrom :Velocity
                                                                               ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#Crystal
+<http://www.stream-ontology.com/crystalstructure#Crystal> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                            owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                                                            owl:someValuesFrom :BandStructure
+                                                                          ] ,
+                                                                          [ rdf:type owl:Restriction ;
+                                                                            owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                                                            owl:someValuesFrom :DensityOfStates
+                                                                          ] .
+
+
+###  http://www.stream-ontology.com/crystalstructure#CrystalUnitCell
+<http://www.stream-ontology.com/crystalstructure#CrystalUnitCell> rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty <http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204> ;
+                                                                                    owl:someValuesFrom :Stress
+                                                                                  ] .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
