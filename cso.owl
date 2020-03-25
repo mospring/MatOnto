@@ -288,8 +288,14 @@
 :ArrayComponent rdf:type owl:Class ;
                 rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_54ee6b5e_5261_44a8_86eb_5717e7fdb9d0> ,
                                 [ rdf:type owl:Class ;
-                                  owl:unionOf ( <http://emmo.info/emmo/middle/math#EMMO_4ce76d7f_03f8_45b6_9003_90052a79bfaa>
-                                                <http://emmo.info/emmo/middle/perceptual#EMMO_a1083d0a_c1fb_471f_8e20_a98f881ad527>
+                                  owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                  owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_8ef3cd6d_ae58_4a8d_9fc0_ad8f49015cd0> ;
+                                                  owl:someValuesFrom <http://emmo.info/emmo/middle/math#EMMO_4ce76d7f_03f8_45b6_9003_90052a79bfaa>
+                                                ]
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                  owl:someValuesFrom <http://emmo.info/emmo/middle/perceptual#EMMO_a1083d0a_c1fb_471f_8e20_a98f881ad527>
+                                                ]
                                               )
                                 ] ,
                                 [ rdf:type owl:Restriction ;
