@@ -10,8 +10,9 @@
      xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
      xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
      xmlns:annotations="http://emmo.info/emmo/top/annotations#">
-    <owl:Ontology rdf:about="file:/home/lenz/stream/matonto/nmi/nmi_onto.owl">
+    <owl:Ontology rdf:about="http://www.stream-ontology.com/nomadmetainfo">
         <owl:imports rdf:resource="http://emmo.info/emmo/1.0.0-alpha"/>
+        <owl:imports rdf:resource="http://www.stream-ontology.com/crystalstructure"/>
     </owl:Ontology>
     
 
@@ -1265,6 +1266,31 @@ If the method defined in the section_method section is perturbative, the XC_meth
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#atom_positions">
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
         <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://emmo.info/emmo/top/math#EMMO_1cba0b27_15d0_4326_933f_379d0b3565b6"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.stream-ontology.com/crystalstructure#Position"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty>
+                                            <rdf:Description>
+                                                <owl:inverseOf rdf:resource="http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204"/>
+                                            </rdf:Description>
+                                        </owl:onProperty>
+                                        <owl:someValuesFrom rdf:resource="http://emmo.info/emmo/middle/materials#EMMO_eb77076b_a104_42ac_a065_798b2d2809ad"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://stream-ontology.com/nomadmetainfo#hasAbstractType"/>
                 <owl:someValuesFrom rdf:resource="http://stream-ontology.com/nomadmetainfo#configuration_core"/>
@@ -1310,6 +1336,31 @@ If the method defined in the section_method section is perturbative, the XC_meth
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#atom_positions_primitive">
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
         <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://emmo.info/emmo/top/math#EMMO_1cba0b27_15d0_4326_933f_379d0b3565b6"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.stream-ontology.com/crystalstructure#Position"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty>
+                                            <rdf:Description>
+                                                <owl:inverseOf rdf:resource="http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204"/>
+                                            </rdf:Description>
+                                        </owl:onProperty>
+                                        <owl:someValuesFrom rdf:resource="http://emmo.info/emmo/middle/materials#EMMO_eb77076b_a104_42ac_a065_798b2d2809ad"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://stream-ontology.com/nomadmetainfo#hasVarDim1"/>
                 <owl:someValuesFrom rdf:resource="http://stream-ontology.com/nomadmetainfo#number_of_atoms_primitive"/>
@@ -1342,6 +1393,31 @@ If the method defined in the section_method section is perturbative, the XC_meth
 
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#atom_positions_std">
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://emmo.info/emmo/top/math#EMMO_1cba0b27_15d0_4326_933f_379d0b3565b6"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="http://www.stream-ontology.com/crystalstructure#Position"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty>
+                                            <rdf:Description>
+                                                <owl:inverseOf rdf:resource="http://emmo.info/emmo/middle/properties#EMMO_e1097637_70d2_4895_973f_2396f04fa204"/>
+                                            </rdf:Description>
+                                        </owl:onProperty>
+                                        <owl:someValuesFrom rdf:resource="http://emmo.info/emmo/middle/materials#EMMO_eb77076b_a104_42ac_a065_798b2d2809ad"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://stream-ontology.com/nomadmetainfo#hasVarDim1"/>
@@ -2918,6 +2994,20 @@ If the method defined in the section_method section is perturbative, the XC_meth
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#band_k_points">
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
         <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:someValuesFrom rdf:resource="http://www.stream-ontology.com/crystalstructure#kPoint"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:allValuesFrom rdf:resource="http://www.stream-ontology.com/crystalstructure#kPoint"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://stream-ontology.com/nomadmetainfo#hasVarDim1"/>
                 <owl:someValuesFrom rdf:resource="http://stream-ontology.com/nomadmetainfo#number_of_k_points_per_segment"/>
@@ -2950,6 +3040,20 @@ If the method defined in the section_method section is perturbative, the XC_meth
 
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#band_k_points_normalized">
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:someValuesFrom rdf:resource="http://www.stream-ontology.com/crystalstructure#kPoint"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:allValuesFrom rdf:resource="http://www.stream-ontology.com/crystalstructure#kPoint"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://stream-ontology.com/nomadmetainfo#hasVarDim1"/>
@@ -3431,6 +3535,7 @@ If the method defined in the section_method section is perturbative, the XC_meth
     <!-- http://stream-ontology.com/nomadmetainfo#bravais_lattice -->
 
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#bravais_lattice">
+        <owl:equivalentClass rdf:resource="http://www.stream-ontology.com/crystalstructure#BravaisLattice"/>
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -3871,6 +3976,7 @@ Accepted values are:
     <!-- http://stream-ontology.com/nomadmetainfo#crystal_system -->
 
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#crystal_system">
+        <owl:equivalentClass rdf:resource="http://www.stream-ontology.com/crystalstructure#CrystalSystem"/>
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -8219,6 +8325,20 @@ Accepted values are:
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#k_mesh_points">
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
         <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:someValuesFrom rdf:resource="http://www.stream-ontology.com/crystalstructure#kPoint"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:allValuesFrom rdf:resource="http://www.stream-ontology.com/crystalstructure#kPoint"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://stream-ontology.com/nomadmetainfo#hasAbstractType"/>
                 <owl:someValuesFrom rdf:resource="http://stream-ontology.com/nomadmetainfo#settings_k_points"/>
@@ -8291,6 +8411,18 @@ Accepted values are:
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#lattice_vectors">
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
         <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://emmo.info/emmo/top/math#EMMO_1cba0b27_15d0_4326_933f_379d0b3565b6"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.stream-ontology.com/crystalstructure#LatticeVector"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://stream-ontology.com/nomadmetainfo#hasAbstractType"/>
                 <owl:someValuesFrom rdf:resource="http://stream-ontology.com/nomadmetainfo#configuration_core"/>
@@ -8336,6 +8468,18 @@ Accepted values are:
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#lattice_vectors_primitive">
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
         <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://emmo.info/emmo/top/math#EMMO_1cba0b27_15d0_4326_933f_379d0b3565b6"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.stream-ontology.com/crystalstructure#LatticeVector"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://stream-ontology.com/nomadmetainfo#hasDatatype"/>
                 <owl:allValuesFrom rdf:resource="http://stream-ontology.com/nomadmetainfo#real"/>
@@ -8374,6 +8518,18 @@ Accepted values are:
 
     <owl:Class rdf:about="http://stream-ontology.com/nomadmetainfo#lattice_vectors_std">
         <rdfs:subClassOf rdf:resource="http://stream-ontology.com/nomadmetainfo#NMI_concrete"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://emmo.info/emmo/top/math#EMMO_1cba0b27_15d0_4326_933f_379d0b3565b6"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</owl:qualifiedCardinality>
+                        <owl:onClass rdf:resource="http://www.stream-ontology.com/crystalstructure#LatticeVector"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://stream-ontology.com/nomadmetainfo#hasDatatype"/>
@@ -19283,6 +19439,18 @@ Allowed values are:
         </rdfs:subClassOf>
         <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Describes the zero-point vibrations method. If skipped or an empty string is used, it means no zero-point vibrations correction is applied.</rdfs:comment>
     </owl:Class>
+    
+
+
+    <!-- http://www.stream-ontology.com/crystalstructure#BravaisLattice -->
+
+    <rdf:Description rdf:about="http://www.stream-ontology.com/crystalstructure#BravaisLattice"/>
+    
+
+
+    <!-- http://www.stream-ontology.com/crystalstructure#CrystalSystem -->
+
+    <rdf:Description rdf:about="http://www.stream-ontology.com/crystalstructure#CrystalSystem"/>
     
 
 
