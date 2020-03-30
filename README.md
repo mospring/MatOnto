@@ -6,3 +6,6 @@ Ontology on the Structure of Crystals, including Symmetry and Structure Prototyp
 
 # MaterialsPropertiesOntology
 Materials Properies Ontology: desribes mainly Crystals
+
+# NomadMetaInfoOntology
+Ontologized Version of the NOMAD Meta Info
