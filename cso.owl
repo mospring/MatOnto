@@ -170,7 +170,7 @@
 
 ###  http://emmo.info/emmo/top/math#EMMO_28fbea28_2204_4613_87ff_6d877b855fcd
 <http://emmo.info/emmo/top/math#EMMO_28fbea28_2204_4613_87ff_6d877b855fcd> rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                                             owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                                                                             owl:onProperty <http://emmo.info/emmo/top/physical#EMMO_f68030be_94b8_4c61_a161_886468558054> ;
                                                                                              owl:someValuesFrom :ArrayComponent
                                                                                            ] .
 
@@ -523,7 +523,18 @@
 
 ###  http://www.stream-ontology.com/crystalstructure#LatticeVector
 :LatticeVector rdf:type owl:Class ;
-               rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec> .
+               rdfs:subClassOf <http://emmo.info/emmo/middle/math#EMMO_06658d8d_dcde_4fc9_aae1_17f71c0bcdec> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty <http://emmo.info/emmo/middle/reductionistic#EMMO_b2282816_b7a3_44c6_b2cb_3feff1ceb7fe> ;
+                                 owl:someValuesFrom [ owl:intersectionOf ( :ArrayComponent
+                                                                           [ rdf:type owl:Restriction ;
+                                                                             owl:onProperty <http://emmo.info/emmo/middle/metrology#EMMO_8ef3cd6d_ae58_4a8d_9fc0_ad8f49015cd0> ;
+                                                                             owl:someValuesFrom <http://emmo.info/emmo/middle/math#EMMO_18d180e4_5e3e_42f7_820c_e08951223486>
+                                                                           ]
+                                                                         ) ;
+                                                      rdf:type owl:Class
+                                                    ]
+                               ] .
 
 
 ###  http://www.stream-ontology.com/crystalstructure#MathematicalOperation
