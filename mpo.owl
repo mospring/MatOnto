@@ -258,6 +258,11 @@
                 rdfs:subClassOf :EnergyBand .
 
 
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#CorrelationEnergy
+:CorrelationEnergy rdf:type owl:Class ;
+                   rdfs:subClassOf :EnergyComponent .
+
+
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#DensityOfStates
 :DensityOfStates rdf:type owl:Class ;
                  rdfs:subClassOf <http://emmo.info/emmo/middle/metrology#EMMO_02c0621e_a527_4790_8a0f_2bb51973c819> ,
@@ -407,10 +412,20 @@ Difference = Minuend - Subtrahend""" .
                                   ] .
 
 
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#EnergyComponent
+:EnergyComponent rdf:type owl:Class ;
+                 rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> .
+
+
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#EnergyDifference
 :EnergyDifference rdf:type owl:Class ;
                   rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> ,
                                   :Difference .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ExchangeEnergy
+:ExchangeEnergy rdf:type owl:Class ;
+                rdfs:subClassOf :EnergyComponent .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ExtinctionCoefficient
@@ -464,6 +479,11 @@ Difference = Minuend - Subtrahend""" .
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#IntrinsicSemiconductor
 :IntrinsicSemiconductor rdf:type owl:Class ;
                         rdfs:subClassOf :Semiconductor .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#KineticEnergy
+:KineticEnergy rdf:type owl:Class ;
+               rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#LengthPerSquareTimeDimension
@@ -590,6 +610,11 @@ MultiplicationProduct = MultiplicationFactor * MultiplicationFactor""" .
                                 owl:onProperty :dependsOn ;
                                 owl:someValuesFrom <http://emmo.info/emmo/middle/isq#EMMO_852b4ab8_fc29_4749_a8c7_b92d4fca7d5a>
                               ] .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#PotentialEnergy
+:PotentialEnergy rdf:type owl:Class ;
+                 rdfs:subClassOf <http://emmo.info/emmo/middle/isq#EMMO_31ec09ba_1713_42cb_83c7_b38bf6f9ced2> .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ProjectedDensityOfStates
@@ -764,6 +789,11 @@ Sum = Summand + Summand""" .
                                       ] .
 
 
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#TotalPotentialEnergy
+:TotalPotentialEnergy rdf:type owl:Class ;
+                      rdfs:subClassOf :PotentialEnergy .
+
+
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#VCBandGap
 :VCBandGap rdf:type owl:Class ;
            rdfs:subClassOf :BandGap ,
@@ -806,6 +836,11 @@ Sum = Summand + Summand""" .
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#ValenceBand
 :ValenceBand rdf:type owl:Class ;
              rdfs:subClassOf :EnergyBand .
+
+
+###  http://www.stream-ontology.com/MaterialsPropertiesOntology#VanderWaalsEnergy
+:VanderWaalsEnergy rdf:type owl:Class ;
+                   rdfs:subClassOf :EnergyComponent .
 
 
 ###  http://www.stream-ontology.com/MaterialsPropertiesOntology#Velocity
